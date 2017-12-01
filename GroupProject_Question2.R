@@ -42,7 +42,6 @@ modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 
 #Subsetting the Results
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
-attach(modelOutput)
 
 #Graphing the Results
 ggplot(modelOutput) + 
@@ -66,7 +65,6 @@ modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 
 #Subsetting the Results
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
-attach(modelOutput)
 
 #Graphing the Results
 ggplot(modelOutput) + 
@@ -84,7 +82,6 @@ modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 
 #Subsetting the Results
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
-attach(modelOutput)
 
 #Graphing the Results
 ggplot(modelOutput) + 
@@ -107,7 +104,6 @@ modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 
 #Subsetting the Results
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
-attach(modelOutput)
 
 #Graphing the Results
 ggplot(modelOutput) + 
@@ -125,7 +121,6 @@ modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 
 #Subsetting the Results
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
-attach(modelOutput)
 
 #Graphing the Results
 ggplot(modelOutput) + 
@@ -150,7 +145,6 @@ modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 
 #Subsetting the Results
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
-attach(modelOutput)
 
 #Graphing the Results
 ggplot(modelOutput) + 
@@ -168,18 +162,16 @@ modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 
 #Subsetting the Results
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
-attach(modelOutput)
 
 #Graphing the Results
 ggplot(modelOutput) + 
   geom_line(aes(x = time, y = H), colour = "blue") + 
   geom_line(aes(x = time, y = P), colour = "red") +
   ggtitle("Initial Parameters \nwith alpha = 1/2*alpha") +
-  labs(y="Population Size", x = "Time") +
+  labs(y="Population Size", x = "Time")
 ggplot(modelOutput, aes(H,P)) + geom_point() + 
   ggtitle("Predator vs. Prey Population") +
   labs(y="Prey Population Size", x = "Predator Population Size")
-  geom_line(aes(x = time, y = P), colour = "red")
 
 
 ### Explaining Parameters ###
