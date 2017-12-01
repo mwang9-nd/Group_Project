@@ -7,9 +7,12 @@ output: html_document
 
 ```{r}
 
+# Load the deSolve package required for solving differential equations in R and ggplot2 package for graphing
 library(deSolve)
 library(ggplot2)
 
+
+# Create a custom function for simulating Lotka-Volterra Competition Model
 predPreySim<-function(t,y,p){
   herbivore=y[1]
   carnivore=y[2]
@@ -23,37 +26,50 @@ predPreySim<-function(t,y,p){
 }
 
 
+# Set parameters, initial state variables, and simulation timepoints
 y = c(25,5)
 p = c(0.5,0.02,0.1,0.2)
 times=seq(from=1,to=100,by=0.1)
 
+
+# Simulate the model using ode
 modelSim=ode(y=y,times=times,func=predPreySim,parms=p)
 colnames(modelSim)[2] <- "herbivore"
 colnames(modelSim)[3] <- "predator"
+
+# Convert to datafrome for plotting purposes
 modelSim2 <- as.data.frame(modelSim)
-ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick") + geom_line(aes(x=time,y=predator),color="royalblue")+theme_classic()+ylab("Counts")
+
+
+# plot simulation
+a=ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick") + geom_line(aes(x=time,y=predator),color="royalblue")+theme_classic()+ylab("Counts") + scale_color_manual(labels=c("Herbivore", "Predator"),values = c("firebrick","royalblue"))
+a
 
 ```
 
 
 ```{r}
 
+# determine max number of herbivores in the simulation
 max(modelSim[,2])
 
 ```
 ```{r}
 
+# determine min number of herbivores in the simulation
 min(modelSim[,2])
 
 ```
 
 ```{r}
 
+# determine max number of predators in the simulation
 max(modelSim[,3])
 
 ```
 ```{r}
 
+# determine min number of predators in the simulation
 min(modelSim[,3])
 
 ```
@@ -61,20 +77,30 @@ min(modelSim[,3])
 
 
 ```{r}
+
+# simulate dynamics by resetting parameters and intitial conditions
 y = c(300,5)
 p = c(0.5,0.02,0.1,0.2)
 times=seq(from=1,to=100,by=0.1)
 
+
+# Simulate the model using ode
 modelSim=ode(y=y,times=times,func=predPreySim,parms=p)
 colnames(modelSim)[2] <- "herbivore"
 colnames(modelSim)[3] <- "predator"
+
+# save model as a data frame for plotting purposes
 modelSim2 <- as.data.frame(modelSim)
-ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+geom_line(aes(x=time,y=predator),color="royalblue")+theme_classic()+ylab("Counts")
+
+# plot simulation
+b=ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+geom_line(aes(x=time,y=predator),color="royalblue")+theme_classic()+ylab("Counts")
+b
 ```
 
 
 ```{r}
 
+# determine max number of herbivores in the simulation
 max(modelSim[,2])
 
 ```
@@ -82,31 +108,55 @@ max(modelSim[,2])
 
 ```{r}
 
+# determine max number of predators in the simulation
 max(modelSim[,3])
 
 ```
 
 ```{r}
+
+# run more simulations chagning the parameters one at a time to learn how the parameters affect the dynamics of the population
 y = c(5,5)
 p = c(0.5,0.02,0.1,0.2)
 times=seq(from=1,to=100,by=0.1)
 
+# run the simulation and plot
 modelSim=ode(y=y,times=times,func=predPreySim,parms=p)
 colnames(modelSim)[2] <- "herbivore"
 colnames(modelSim)[3] <- "predator"
 modelSim2 <- as.data.frame(modelSim)
-ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+geom_line(aes(x=time,y=predator),color="royalblue")+theme_classic()+ylab("Counts")
+c=ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+geom_line(aes(x=time,y=predator),color="royalblue")+theme_classic()+ylab("Counts")
+c
 ```
 
 
 ```{r}
 
+# determine max number of herbivores in the simulation
 max(modelSim[,2])
 
 ```
 
 ```{r}
 
+# determine max number of predators in the simulation
 max(modelSim[,3])
 
 ```
+
+```{r}
+
+# plot the graphs side-by-side to look at the how changing intitial population number parameters changes the simulation
+library(grid)
+library(gridExtra)
+grid.arrange(a,b,c, ncol=3)
+```
+
+
+What is the role of each parameter?
+
+
+What can you say about the role of predators in the simulations?
+
+
+What is the relationship between parameter values and predator-prey cycle length?
