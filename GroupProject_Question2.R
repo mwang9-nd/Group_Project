@@ -17,8 +17,8 @@ ddRM <- function (t,y,p){
   alpha = p[6] #Prey self-limiting term
   
   #Defining Rates of Change
-  dHdt = b*H*(1 - alpha*H) - w*H/(d + H)*P
-  dPdt = e*w*H/(d + H)*P- s*P
+  dHdt = b*H*(1 - alpha*H) - w*H/(d + H)*P #Rate of Prey population over time
+  dPdt = e*w*H/(d + H)*P- s*P #Rate of Predator population over time
   
   return(list(c(dHdt, dPdt)))
 }
@@ -38,6 +38,7 @@ Y0 = c(H0, P0)
 
 times = 1:400
 
+### Simulating model with Inital conditions
 modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 
 #Subsetting the Results
