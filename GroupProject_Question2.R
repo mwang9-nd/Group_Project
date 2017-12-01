@@ -1,7 +1,7 @@
 library(deSolve)
 library(ggplot2)
 
-#Function for Rosenzweig-MacArthur Predator/Prey Equations
+### Function for Rosenzweig-MacArthur Predator/Prey Equations ###
 ddRM <- function (t,y,p){
   
   #Unpack State Variables
@@ -23,7 +23,7 @@ ddRM <- function (t,y,p){
   return(list(c(dHdt, dPdt)))
 }
 
-#Defining Initial Parameters
+### Defining Initial Parameters ###
 b = 0.8
 e = 0.07
 s = 0.2
@@ -47,7 +47,6 @@ attach(modelOutput)
 #Graphing the Results
 ggplot(modelOutput) + 
   geom_line(aes(x = time, y = H), colour = "blue") + 
-<<<<<<< HEAD
   geom_line(aes(x = time, y = P), colour = "red") + 
   ggtitle("Initial Parameters") +
   labs(y="Population Size", x = "Time")
@@ -55,7 +54,7 @@ ggplot(modelOutput, aes(H,P)) + geom_point() +
   ggtitle("Predator vs. Prey Population") +
   labs(y="Prey Population Size", x = "Predator Population Size")
 
-###Changing Parameters 
+### Changing Parameters ### 
 
 ##W - the Predator Attack Rate
 w1 = 2*w
@@ -180,9 +179,11 @@ ggplot(modelOutput) +
 ggplot(modelOutput, aes(H,P)) + geom_point() + 
   ggtitle("Predator vs. Prey Population") +
   labs(y="Prey Population Size", x = "Predator Population Size")
-=======
   geom_line(aes(x = time, y = P), colour = "red")
 
+
+### Explaining Parameters ###
+  
 # ---------------
 # Prey Birth Rate
 # ---------------
@@ -201,6 +202,7 @@ ggplot(modelOutput, aes(H,P)) + geom_point() +
   # Predator population will continue to increase until capacity is reached
   # Capacity for Prey and Predator will increase as birth rate of prey increases
 
+  
 # -----------------------------------------
 # Conversion efficiency of Prey to Predator
 # -----------------------------------------
@@ -224,17 +226,59 @@ ggplot(modelOutput, aes(H,P)) + geom_point() +
   # System will change from decreasing Prey and increasing Predator until Predator density is reached
   # Predators will decrease from starvation or lack of Prey to support system until Prey numbers bounch back
   # Increase in efficiency will increase maximum capacity of predator
-
+ 
+  
 # -------------------
 # Predator Death Rate
 # -------------------
-
+  
 # Low Death Rate (0.05-0.2)
   # Low death rate leads to depletion of Prey population
   # Decrease in Prey population decreases Predator density limit
   # Oscillation of both population until equilibrium is reached, or will continue to oscillate between capacity and 0
-
+  
 # High Death Rate (0.25-0.8)
   # Initial dip in Prey population results from initial Predator population
   # High death rate results in eradication of Predator and increase of Prey Population to self-limiting density
->>>>>>> eb55c43677cf063c9a0f1bd29a98ea75f72229df
+  
+
+# -------------------
+# Predator Attack Rate
+# -------------------
+
+# Low Attack Rate 
+  # Low attack rate means that predators cannot sustain themselves, and their population goes to zero
+  # Prey population reach self-limiting equilibrium
+
+# High Attack Rate
+  # Predators are able to survive
+  # High attack rate implies that prey will be driven to a small population. Predators can't survive if prey population is small, so they decreases
+  # As predator population decreases, prey population is able to increase. The cyle repeats
+  # Long-term behaivor is stable equilibrium
+
+# ---------------
+# Prey Denisty to Maximize Predator Attack
+# ---------------
+  
+# Low d values
+  # Predator population can maximize attack rate more easily
+  # Maximizing attack rate drives prey population down
+  # Small prey population hurts the predators, so predators decrease
+  # The system oscillates 
+  
+# High d values 
+  # Predators cannot reach an attack rate that sustains their population
+  # Predator population goes to zero; prey go to carrying capacity
+  
+# -----------------------------------------
+# Carrying Capacity/Alpha (alpha = 1/k)
+# -----------------------------------------
+  
+# Low alpha
+  # Low alpha implies higher carrying capacity of prey
+  # Higher carrying capacity implies higher population; this sustains predators
+  # System oscillates
+  
+# High alpha
+  # Carrying Capacity is lower, and predators cannot sustain themseleves when there are less prey
+  # Prey go to their carrying capacity 
