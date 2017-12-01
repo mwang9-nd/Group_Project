@@ -36,7 +36,7 @@ H0 = 500
 P0 = 120
 Y0 = c(H0, P0)
 
-times = 1:100
+times = 1:400
 
 modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 
@@ -47,4 +47,135 @@ attach(modelOutput)
 #Graphing the Results
 ggplot(modelOutput) + 
   geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red")
+  geom_line(aes(x = time, y = P), colour = "red") + 
+  ggtitle("Initial Parameters") +
+  labs(y="Population Size", x = "Time")
+ggplot(modelOutput, aes(H,P)) + geom_point() + 
+  ggtitle("Predator vs. Prey Population") +
+  labs(y="Prey Population Size", x = "Predator Population Size")
+
+###Changing Parameters 
+
+##W - the Predator Attack Rate
+w1 = 2*w
+w2 = 1/2*w
+
+#w1
+params = c(b, e, s, w1, d, alpha)
+modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
+
+#Subsetting the Results
+modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
+attach(modelOutput)
+
+#Graphing the Results
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "blue") + 
+  geom_line(aes(x = time, y = P), colour = "red") + 
+  ggtitle("Initial Parameters \nwith w = 2*w") +
+  labs(y="Population Size", x = "Time")
+ggplot(modelOutput, aes(H,P)) + geom_point() + 
+  ggtitle("Predator vs. Prey Population") +
+  labs(y="Prey Population Size", x = "Predator Population Size")
+
+#w2
+params = c(b, e, s, w2, d, alpha)
+modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
+
+#Subsetting the Results
+modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
+attach(modelOutput)
+
+#Graphing the Results
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "blue") + 
+  geom_line(aes(x = time, y = P), colour = "red") +
+  ggtitle("Initial Parameters \nwith w = 1/2*w") +
+  labs(y="Population Size", x = "Time")
+ggplot(modelOutput, aes(H,P)) + geom_point() + 
+  ggtitle("Predator vs. Prey Population") +
+  labs(y="Prey Population Size", x = "Predator Population Size")
+
+##d - Prey population when predator kill rate is 1/2*max
+d1 = 2*d
+d2 = 1/2*d
+
+
+#d1
+params = c(b, e, s, w, d1, alpha)
+modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
+
+#Subsetting the Results
+modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
+attach(modelOutput)
+
+#Graphing the Results
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "blue") + 
+  geom_line(aes(x = time, y = P), colour = "red") + 
+  ggtitle("Initial Parameters \nwith d = 2*d") +
+  labs(y="Population Size", x = "Time")
+ggplot(modelOutput, aes(H,P)) + geom_point() + 
+  ggtitle("Predator vs. Prey Population") +
+  labs(y="Prey Population Size", x = "Predator Population Size")
+
+#d2
+params = c(b, e, s, w, d2, alpha)
+modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
+
+#Subsetting the Results
+modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
+attach(modelOutput)
+
+#Graphing the Results
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "blue") + 
+  geom_line(aes(x = time, y = P), colour = "red") +
+  ggtitle("Initial Parameters \nwith d = 1/2*d") +
+  labs(y="Population Size", x = "Time")
+ggplot(modelOutput, aes(H,P)) + geom_point() + 
+  ggtitle("Predator vs. Prey Population") +
+  labs(y="Prey Population Size", x = "Predator Population Size")
+
+
+
+##alpha - Prey self-limiting factor 
+alpha1 = 2*alpha
+alpha2 = 1/2*alpha
+
+
+#alpha1
+params = c(b, e, s, w, d, alpha1)
+modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
+
+#Subsetting the Results
+modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
+attach(modelOutput)
+
+#Graphing the Results
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "blue") + 
+  geom_line(aes(x = time, y = P), colour = "red") + 
+  ggtitle("Initial Parameters \nwith alpha = 2*alpha") +
+  labs(y="Population Size", x = "Time")
+ggplot(modelOutput, aes(H,P)) + geom_point() + 
+  ggtitle("Predator vs. Prey Population") +
+  labs(y="Prey Population Size", x = "Predator Population Size")
+
+#alpha2
+params = c(b, e, s, w, d, alpha2)
+modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
+
+#Subsetting the Results
+modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
+attach(modelOutput)
+
+#Graphing the Results
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "blue") + 
+  geom_line(aes(x = time, y = P), colour = "red") +
+  ggtitle("Initial Parameters \nwith alpha = 1/2*alpha") +
+  labs(y="Population Size", x = "Time") +
+ggplot(modelOutput, aes(H,P)) + geom_point() + 
+  ggtitle("Predator vs. Prey Population") +
+  labs(y="Prey Population Size", x = "Predator Population Size")
