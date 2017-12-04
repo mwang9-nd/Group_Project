@@ -116,24 +116,24 @@ ggplot(modelOutput, aes(H,P)) + geom_point() +
   labs(y="Prey Population Size", x = "Predator Population Size")
 ```
 
-## Describing Role of Parameters
+# Describing Role of Parameters
 
 Let's now change individual parameters in order to show the role that each one has 
 
-# -------------------
-# Predator Attack Rate
-# -------------------
-###Low Attack Rate: 
+
+## Predator Attack Rate
+
+### Low Attack Rate: 
 
   Low attack rate means that predators cannot sustain themselves, and their population goes to zero
   
   Prey population reach self-limiting equilibrium
 
-###High Attack Rate
+### High Attack Rate
 
   Predators are able to survive
   
-  High attack rate implies that prey will be driven to a small population. Predators can't survive if prey population is small, so they decreases
+  High attack rate implies that prey will be driven to a small population. Predators can't survive if prey population is small, so they    decreases
   
   As predator population decreases, prey population is able to increase. The cycle repeats
   
@@ -174,11 +174,11 @@ ggplot(modelOutput) +
   labs(y="Population Size", x = "Time")
 ```
 
-# ---------------
-# Prey Denisty to Maximize Predator Attack
-# ---------------
+
+## Prey Denisty to Maximize Predator Attack
+
   
-###Low d values
+### Low d values
 
   Predator population can maximize attack rate more easily
   
@@ -188,7 +188,7 @@ ggplot(modelOutput) +
   
   The system oscillates 
   
-###High d values 
+### High d values 
 
   Predators cannot reach an attack rate that sustains their population
   
@@ -230,11 +230,10 @@ ggplot(modelOutput) +
   labs(y="Population Size", x = "Time")
 ```
 
-# -----------------------------------------
-# Carrying Capacity/Alpha (alpha = 1/k)
-# -----------------------------------------
+
+## Carrying Capacity/Alpha (alpha = 1/k)
   
-###Low alpha
+### Low alpha
 
   Low alpha implies higher carrying capacity of prey
   
@@ -242,7 +241,7 @@ ggplot(modelOutput) +
   
   System oscillates
   
-###High alpha
+### High alpha
 
   Carrying Capacity is lower, and predators cannot sustain themseleves when there are less prey
   
@@ -285,7 +284,17 @@ ggplot(modelOutput) +
 ```
 
 ## Prey Birthrate
-  
+
+### At low birth rate (0.2-1.6)
+Prey and Predator population will decrease initially before increase in prey then increase in predator to equilibrium.
+
+Predator death due to starvation allowing Prey population to increase to self-limiting density. Increase in Prey population allows Predator population to increase to capacity while Prey population decreases to equilibrium 
+
+### At high birth rate (2.0-3.2)
+Prey birthrate increases to self-limiting density before Predator decreases Prey rate to equilibrium
+
+Initial Predator population does not require as much Prey to sustain itself, therefore Prey population reaches self-limiting density. Predator population will continue to increase until capacity is reached. Capacity for Prey and Predator will increase as birth rate of prey increases
+
 ```{r echo=FALSE}
 # Create graph for low birthrate
 b = 1.2
@@ -312,17 +321,23 @@ ggplot(modelOutput) +
   labs(y="Population Size", x = "Time")
 ```
 
-### At low birth rate (0.2-1.6)
-Prey and Predator population will decrease initially before increase in prey then increase in predator to equilibrium.
-
-Predator death due to starvation allowing Prey population to increase to self-limiting density. Increase in Prey population allows Predator population to increase to capacity while Prey population decreases to equilibrium 
-
-### At high birth rate (2.0-3.2)
-Prey birthrate increases to self-limiting density before Predator decreases Prey rate to equilibrium
-
-Initial Predator population does not require as much Prey to sustain itself, therefore Prey population reaches self-limiting density. Predator population will continue to increase until capacity is reached. Capacity for Prey and Predator will increase as birth rate of prey increases
-
 ## Conversion efficiency of Prey to Predator
+
+### Low efficiency conversion (0.0175-0.0525)
+Rate of Prey will initially decrease because Predator is present in system. 
+
+Rate of Predator decreases because of efficiency to convert energy to more Predator, the population will decrease to 0 as Prey population increases to self-limiting density. Rate to capacity determined by other parameters in the function
+
+### Medium efficiency conversion and mutual equilibrium (0.07-0.0875)
+Rate of Prey and Predator will oscillate.
+
+Prey population drops as Predator starts consuming.  Predator reaches a population size that is not sustained by the amount of Prey and population will decrease. Prey will bounce back and cycle will begin again until reaching a stable equilibrium.
+
+### High efficiency conversion (0.1050-0.28)
+Rate of exchange from Prey to Predator occurs too quickly.
+
+System will change from decreasing Prey and increasing Predator until Predator density is reached. Predators will decrease from starvation or lack of Prey to support system until Prey numbers bounch back. Increase in efficiency will increase maximum capacity of predator
+
   
 ```{r echo=FALSE}
 # Create graph for low efficiency
@@ -362,22 +377,18 @@ ggplot(modelOutput) +
   labs(y="Population Size", x = "Time")
 ```
 
-### Low efficiency conversion (0.0175-0.0525)
-Rate of Prey will initially decrease because Predator is present in system. 
-
-Rate of Predator decreases because of efficiency to convert energy to more Predator, the population will decrease to 0 as Prey population increases to self-limiting density. Rate to capacity determined by other parameters in the function
-
-### Medium efficiency conversion and mutual equilibrium (0.07-0.0875)
-Rate of Prey and Predator will oscillate.
-
-Prey population drops as Predator starts consuming.  Predator reaches a population size that is not sustained by the amount of Prey and population will decrease. Prey will bounce back and cycle will begin again until reaching a stable equilibrium.
-
-### High efficiency conversion (0.1050-0.28)
-Rate of exchange from Prey to Predator occurs too quickly.
-
-System will change from decreasing Prey and increasing Predator until Predator density is reached. Predators will decrease from starvation or lack of Prey to support system until Prey numbers bounch back. Increase in efficiency will increase maximum capacity of predator
-
 ## Predator Death Rate
+
+### Low Death Rate (0.05-0.2)
+Low death rate leads to depletion of Prey population
+
+Decrease in Prey population decreases Predator density limit. Oscillation of both population until equilibrium is reached, or will continue to oscillate between capacity and 0
+
+#### High Death Rate (0.25-0.8)
+Initial dip in Prey population results from initial Predator population
+
+High death rate results in eradication of Predator and increase of Prey Population to self-limiting density
+
   
 ```{r echo=FALSE}
 # Create graph for low death rate
@@ -404,13 +415,3 @@ ggplot(modelOutput) +
   ggtitle("High Death Rate") +
   labs(y="Population Size", x = "Time")
 ```
-
-### Low Death Rate (0.05-0.2)
-Low death rate leads to depletion of Prey population
-
-Decrease in Prey population decreases Predator density limit. Oscillation of both population until equilibrium is reached, or will continue to oscillate between capacity and 0
-
-#### High Death Rate (0.25-0.8)
-Initial dip in Prey population results from initial Predator population
-
-High death rate results in eradication of Predator and increase of Prey Population to self-limiting density
