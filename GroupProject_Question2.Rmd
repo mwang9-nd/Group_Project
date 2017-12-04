@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(deSolve)
 library(ggplot2)
+library(grid)
 ```
 
 ## Model Description
@@ -106,40 +107,42 @@ modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 #Graphing the Results
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
   ggtitle("Initial Parameters") +
-  labs(y="Population Size", x = "Time")
+  labs(y="Population Size", x = "Time") +
+  theme_classic()
+  
 ggplot(modelOutput, aes(H,P)) + geom_point() + 
   ggtitle("Predator vs. Prey Population") +
   labs(y="Prey Population Size", x = "Predator Population Size")
 ```
 
-## Describing Role of Parameters
+# Describing Role of Parameters
 
 Let's now change individual parameters in order to show the role that each one has 
 
-# -------------------
-# Predator Attack Rate
-# -------------------
-###Low Attack Rate: 
+
+## Predator Attack Rate
+
+### Low Attack Rate: 
 
   Low attack rate means that predators cannot sustain themselves, and their population goes to zero
   
   Prey population reach self-limiting equilibrium
 
-###High Attack Rate
+### High Attack Rate
 
   Predators are able to survive
   
-  High attack rate implies that prey will be driven to a small population. Predators can't survive if prey population is small, so they decreases
+  High attack rate implies that prey will be driven to a small population. Predators can't survive if prey population is small, so they    decreases
   
   As predator population decreases, prey population is able to increase. The cycle repeats
   
   Long-term behaivor is stable equilibrium
 
 
-```{r Predator Attack Rate}
+```{r echo=FALSE}
 ##W - the Predator Attack Rate
 w1 = 2*w
 w2 = 1/2*w
@@ -153,13 +156,11 @@ modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 #Graphing the Results
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
   ggtitle("Initial Parameters \nwith w = 2*w") +
-  labs(y="Population Size", x = "Time")
-ggplot(modelOutput, aes(H,P)) + geom_point() + 
-  ggtitle("Predator vs. Prey Population") +
-  labs(y="Prey Population Size", x = "Predator Population Size")
+  labs(y="Population Size", x = "Time") +
+  theme_classic()
 
 #w2
 params = c(b, e, s, w2, d, alpha)
@@ -170,21 +171,18 @@ modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 #Graphing the Results
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") +
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") +
   ggtitle("Initial Parameters \nwith w = 1/2*w") +
-  labs(y="Population Size", x = "Time")
-ggplot(modelOutput, aes(H,P)) + geom_point() + 
-  ggtitle("Predator vs. Prey Population") +
-  labs(y="Prey Population Size", x = "Predator Population Size")
-
+  labs(y="Population Size", x = "Time") +
+  theme_classic()
 ```
 
-# ---------------
-# Prey Denisty to Maximize Predator Attack
-# ---------------
+
+## Prey Denisty to Maximize Predator Attack
+
   
-###Low d values
+### Low d values
 
   Predator population can maximize attack rate more easily
   
@@ -194,14 +192,14 @@ ggplot(modelOutput, aes(H,P)) + geom_point() +
   
   The system oscillates 
   
-###High d values 
+### High d values 
 
   Predators cannot reach an attack rate that sustains their population
   
   Predator population goes to zero; prey go to carrying capacity
   
   
-```{r Prey Denisty to Maximize Predator Attack}
+```{r echo=FALSE}
 ##d - Prey population when predator kill rate is 1/2*max
 d1 = 2*d
 d2 = 1/2*d
@@ -216,13 +214,11 @@ modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 #Graphing the Results
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
   ggtitle("Initial Parameters \nwith d = 2*d") +
-  labs(y="Population Size", x = "Time")
-ggplot(modelOutput, aes(H,P)) + geom_point() + 
-  ggtitle("Predator vs. Prey Population") +
-  labs(y="Prey Population Size", x = "Predator Population Size")
+  labs(y="Population Size", x = "Time") +
+  theme_classic()
 
 #d2
 params = c(b, e, s, w, d2, alpha)
@@ -233,20 +229,17 @@ modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 #Graphing the Results
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") +
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") +
   ggtitle("Initial Parameters \nwith d = 1/2*d") +
-  labs(y="Population Size", x = "Time")
-ggplot(modelOutput, aes(H,P)) + geom_point() + 
-  ggtitle("Predator vs. Prey Population") +
-  labs(y="Prey Population Size", x = "Predator Population Size")
+  labs(y="Population Size", x = "Time") +
+  theme_classic()
 ```
 
-# -----------------------------------------
-# Carrying Capacity/Alpha (alpha = 1/k)
-# -----------------------------------------
+
+## Carrying Capacity/Alpha (alpha = 1/k)
   
-###Low alpha
+### Low alpha
 
   Low alpha implies higher carrying capacity of prey
   
@@ -254,14 +247,14 @@ ggplot(modelOutput, aes(H,P)) + geom_point() +
   
   System oscillates
   
-###High alpha
+### High alpha
 
   Carrying Capacity is lower, and predators cannot sustain themseleves when there are less prey
   
   Prey go to their carrying capacity 
   
   
-```{r Prey Self-Limiting Factor}
+```{r echo=FALSE}
 ##alpha - Prey self-limiting factor 
 alpha1 = 2*alpha
 alpha2 = 1/2*alpha
@@ -276,13 +269,11 @@ modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 #Graphing the Results
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
   ggtitle("Initial Parameters \nwith alpha = 2*alpha") +
-  labs(y="Population Size", x = "Time")
-ggplot(modelOutput, aes(H,P)) + geom_point() + 
-  ggtitle("Predator vs. Prey Population") +
-  labs(y="Prey Population Size", x = "Predator Population Size")
+  labs(y="Population Size", x = "Time") +
+  theme_classic()
 
 #alpha2
 params = c(b, e, s, w, d, alpha2)
@@ -293,46 +284,14 @@ modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 #Graphing the Results
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") +
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") +
   ggtitle("Initial Parameters \nwith alpha = 1/2*alpha") +
-  labs(y="Population Size", x = "Time")
-ggplot(modelOutput, aes(H,P)) + geom_point() + 
-  ggtitle("Predator vs. Prey Population") +
-  labs(y="Prey Population Size", x = "Predator Population Size")
+  labs(y="Population Size", x = "Time") +
+  theme_classic()
 ```
 
 ## Prey Birthrate
-  
-```{r echo=FALSE}
-# Create graph for low birthrate
-b = 1.2
-params = c(b, e, s, w, d, alpha)
-modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
-modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
-
-b1 = ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
-  ggtitle("Low Birhrate") +
-  labs(y="Population Size", x = "Time")
-
-# Create graph for high birthrate
-b = 2.6
-params = c(b, e, s, w, d, alpha)
-modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
-modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
-
-b2 = ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
-  ggtitle("High Birthrate") +
-  labs(y="Population Size", x = "Time")
-
-# Arrange graphs together
-grid.arrange(b1, b2, ncol = 2)
-
-```
 
 ### At low birth rate (0.2-1.6)
 Prey and Predator population will decrease initially before increase in prey then increase in predator to equilibrium.
@@ -344,49 +303,35 @@ Prey birthrate increases to self-limiting density before Predator decreases Prey
 
 Initial Predator population does not require as much Prey to sustain itself, therefore Prey population reaches self-limiting density. Predator population will continue to increase until capacity is reached. Capacity for Prey and Predator will increase as birth rate of prey increases
 
-## Conversion efficiency of Prey to Predator
-  
 ```{r echo=FALSE}
-# Create graph for low efficiency
-e = 0.0525
+# Create graph for low birthrate
+b = 1.2
 params = c(b, e, s, w, d, alpha)
 modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
-e1 = ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
-  ggtitle("Low Efficiency") +
-  labs(y="Population Size", x = "Time")
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
+  ggtitle("Low Birhrate") +
+  labs(y="Population Size", x = "Time") +
+  theme_classic()
 
-# Create graph for medium efficiency
-e = 0.0875
+# Create graph for high birthrate
+b = 2.6
 params = c(b, e, s, w, d, alpha)
 modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
-e2 = ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
-  ggtitle("Medium Efficiency") +
-  labs(y="Population Size", x = "Time")
-
-# Create graph for high efficiency
-e = 0.1050
-params = c(b, e, s, w, d, alpha)
-modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
-modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
-
-e3 = ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
-  ggtitle("High Efficiency") +
-  labs(y="Population Size", x = "Time")
-
-# Arrange graphs together
-grid.arrange(e1, e2, e3 , ncol = 3)
-
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
+  ggtitle("High Birthrate") +
+  labs(y="Population Size", x = "Time") +
+  theme_classic()
 ```
+
+## Conversion efficiency of Prey to Predator
 
 ### Low efficiency conversion (0.0175-0.0525)
 Rate of Prey will initially decrease because Predator is present in system. 
@@ -403,37 +348,49 @@ Rate of exchange from Prey to Predator occurs too quickly.
 
 System will change from decreasing Prey and increasing Predator until Predator density is reached. Predators will decrease from starvation or lack of Prey to support system until Prey numbers bounch back. Increase in efficiency will increase maximum capacity of predator
 
-## Predator Death Rate
   
 ```{r echo=FALSE}
-# Create graph for low death rate
-s = 0.2
+# Create graph for low efficiency
+e = 0.0525
 params = c(b, e, s, w, d, alpha)
 modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
-s1 = ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
-  ggtitle("Low Death Rate") +
-  labs(y="Population Size", x = "Time")
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
+  ggtitle("Low Efficiency") +
+  labs(y="Population Size", x = "Time") +
+  theme_classic()
 
-# Create graph for high death rate
-s = 0.6
+# Create graph for medium efficiency
+e = 0.0875
 params = c(b, e, s, w, d, alpha)
 modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
-s2 = ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
-  ggtitle("High Death Rate") +
-  labs(y="Population Size", x = "Time")
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
+  ggtitle("Medium Efficiency") +
+  labs(y="Population Size", x = "Time") +
+  theme_classic()
 
-# Arrange graphs together
-grid.arrange(s1, s2, ncol = 2)
+# Create graph for high efficiency
+e = 0.1050
+params = c(b, e, s, w, d, alpha)
+modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
+modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
+  ggtitle("High Efficiency") +
+  labs(y="Population Size", x = "Time") +
+  theme_classic()
 ```
+
+## Predator Death Rate
 
 ### Low Death Rate (0.05-0.2)
 Low death rate leads to depletion of Prey population
@@ -444,3 +401,32 @@ Decrease in Prey population decreases Predator density limit. Oscillation of bot
 Initial dip in Prey population results from initial Predator population
 
 High death rate results in eradication of Predator and increase of Prey Population to self-limiting density
+
+  
+```{r echo=FALSE}
+# Create graph for low death rate
+s = 0.2
+params = c(b, e, s, w, d, alpha)
+modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
+modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
+
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
+  ggtitle("Low Death Rate") +
+  labs(y="Population Size", x = "Time") +
+  theme_classic()
+
+# Create graph for high death rate
+s = 0.6
+params = c(b, e, s, w, d, alpha)
+modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
+modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
+
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
+  ggtitle("High Death Rate") +
+  labs(y="Population Size", x = "Time") +
+  theme_classic()
+```
