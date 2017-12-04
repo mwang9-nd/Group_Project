@@ -236,10 +236,11 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 summary(modelSim)
 ```
 
-Changing conversion efficiency also changes min/max, frequency, and predator/prey relationships. However, the most interesting aspect of changing the conversion efficency is 
+Changing conversion efficiency also changes min/max, frequency, and predator/prey relationships. However, the most interesting aspect of changing the conversion efficency is the change in relative means between the prey/predator relationship. Increasing conversion efficiency brings the relative number of prey much closer to the relative mean of the predator, as would be expected because the predator can more efficiently convert the prey into momre predators.
 
+### Changing predator death rate
 
-Change p[4] from 0.2 to 1
+Change predator death rate from 0.2 to 1
 ```{r}
 y = c(25,5)
 p = c(0.5,0.02,0.1,1)
@@ -256,7 +257,7 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 summary(modelSim)
 ```
 
-Change p[4] from 0.2 to 0.04
+Change predtor death rate from 0.2 to 0.04
 ```{r}
 y = c(25,5)
 p = c(0.5,0.02,0.1,0.02)
@@ -271,8 +272,11 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 ```
 
 ```{r}
-summary(modelSim)
+summary(modelSim) 
 ```
 
+Predator death rate also has significant effects on the max/min and frequency in predator/prey. Additionally, the relative means between the predator/prey relationships is also effected. Increasing predator death rate increases prey counts (both max and mean) but also increases the max predator count. Decreasing predator death rate has the opposite effect while both increase the frequency.
 
+### Conclusion
 
+OVerall, all of the state variable and parameters have some effect on the model, whether they change the max/min of the prey/predator, change the overall frequency, change the rate of increase/decrease, or change the relative means of the two populations. What is interesting to note is the models in which the predator/prey minimun numbers reach <1. Realistically, it seems impossible to have half a predator or half a prey, suggesting these models are unsustainable. This suggests, that especially when changing the parameters, one must be careful that the parameters are not changed significantly since the model may become unrealistic, unless that is the purpose.
