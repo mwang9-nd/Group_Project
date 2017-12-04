@@ -115,24 +115,24 @@ ggplot(modelOutput, aes(H,P)) + geom_point() +
   labs(y="Prey Population Size", x = "Predator Population Size")
 ```
 
-## Describing Role of Parameters
+# Describing Role of Parameters
 
 Let's now change individual parameters in order to show the role that each one has 
 
-# -------------------
-# Predator Attack Rate
-# -------------------
-###Low Attack Rate: 
+
+## Predator Attack Rate
+
+### Low Attack Rate: 
 
   Low attack rate means that predators cannot sustain themselves, and their population goes to zero
   
   Prey population reach self-limiting equilibrium
 
-###High Attack Rate
+### High Attack Rate
 
   Predators are able to survive
   
-  High attack rate implies that prey will be driven to a small population. Predators can't survive if prey population is small, so they decreases
+  High attack rate implies that prey will be driven to a small population. Predators can't survive if prey population is small, so they    decreases
   
   As predator population decreases, prey population is able to increase. The cycle repeats
   
@@ -180,11 +180,11 @@ ggplot(modelOutput, aes(H,P)) + geom_point() +
 
 ```
 
-# ---------------
-# Prey Denisty to Maximize Predator Attack
-# ---------------
+
+## Prey Denisty to Maximize Predator Attack
+
   
-###Low d values
+### Low d values
 
   Predator population can maximize attack rate more easily
   
@@ -194,7 +194,7 @@ ggplot(modelOutput, aes(H,P)) + geom_point() +
   
   The system oscillates 
   
-###High d values 
+### High d values 
 
   Predators cannot reach an attack rate that sustains their population
   
@@ -242,11 +242,10 @@ ggplot(modelOutput, aes(H,P)) + geom_point() +
   labs(y="Prey Population Size", x = "Predator Population Size")
 ```
 
-# -----------------------------------------
-# Carrying Capacity/Alpha (alpha = 1/k)
-# -----------------------------------------
+
+## Carrying Capacity/Alpha (alpha = 1/k)
   
-###Low alpha
+### Low alpha
 
   Low alpha implies higher carrying capacity of prey
   
@@ -254,7 +253,7 @@ ggplot(modelOutput, aes(H,P)) + geom_point() +
   
   System oscillates
   
-###High alpha
+### High alpha
 
   Carrying Capacity is lower, and predators cannot sustain themseleves when there are less prey
   
