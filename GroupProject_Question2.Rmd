@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(deSolve)
 library(ggplot2)
+library(grid)
 ```
 
 ## Model Description
@@ -139,7 +140,7 @@ Let's now change individual parameters in order to show the role that each one h
   Long-term behaivor is stable equilibrium
 
 
-```{r Predator Attack Rate}
+```{r echo=FALSE}
 ##W - the Predator Attack Rate
 w1 = 2*w
 w2 = 1/2*w
@@ -157,9 +158,6 @@ ggplot(modelOutput) +
   geom_line(aes(x = time, y = P), colour = "red") + 
   ggtitle("Initial Parameters \nwith w = 2*w") +
   labs(y="Population Size", x = "Time")
-ggplot(modelOutput, aes(H,P)) + geom_point() + 
-  ggtitle("Predator vs. Prey Population") +
-  labs(y="Prey Population Size", x = "Predator Population Size")
 
 #w2
 params = c(b, e, s, w2, d, alpha)
@@ -174,10 +172,6 @@ ggplot(modelOutput) +
   geom_line(aes(x = time, y = P), colour = "red") +
   ggtitle("Initial Parameters \nwith w = 1/2*w") +
   labs(y="Population Size", x = "Time")
-ggplot(modelOutput, aes(H,P)) + geom_point() + 
-  ggtitle("Predator vs. Prey Population") +
-  labs(y="Prey Population Size", x = "Predator Population Size")
-
 ```
 
 # ---------------
@@ -201,7 +195,7 @@ ggplot(modelOutput, aes(H,P)) + geom_point() +
   Predator population goes to zero; prey go to carrying capacity
   
   
-```{r Prey Denisty to Maximize Predator Attack}
+```{r echo=FALSE}
 ##d - Prey population when predator kill rate is 1/2*max
 d1 = 2*d
 d2 = 1/2*d
@@ -220,9 +214,6 @@ ggplot(modelOutput) +
   geom_line(aes(x = time, y = P), colour = "red") + 
   ggtitle("Initial Parameters \nwith d = 2*d") +
   labs(y="Population Size", x = "Time")
-ggplot(modelOutput, aes(H,P)) + geom_point() + 
-  ggtitle("Predator vs. Prey Population") +
-  labs(y="Prey Population Size", x = "Predator Population Size")
 
 #d2
 params = c(b, e, s, w, d2, alpha)
@@ -237,9 +228,6 @@ ggplot(modelOutput) +
   geom_line(aes(x = time, y = P), colour = "red") +
   ggtitle("Initial Parameters \nwith d = 1/2*d") +
   labs(y="Population Size", x = "Time")
-ggplot(modelOutput, aes(H,P)) + geom_point() + 
-  ggtitle("Predator vs. Prey Population") +
-  labs(y="Prey Population Size", x = "Predator Population Size")
 ```
 
 # -----------------------------------------
@@ -261,7 +249,7 @@ ggplot(modelOutput, aes(H,P)) + geom_point() +
   Prey go to their carrying capacity 
   
   
-```{r Prey Self-Limiting Factor}
+```{r echo=FALSE}
 ##alpha - Prey self-limiting factor 
 alpha1 = 2*alpha
 alpha2 = 1/2*alpha
@@ -280,9 +268,6 @@ ggplot(modelOutput) +
   geom_line(aes(x = time, y = P), colour = "red") + 
   ggtitle("Initial Parameters \nwith alpha = 2*alpha") +
   labs(y="Population Size", x = "Time")
-ggplot(modelOutput, aes(H,P)) + geom_point() + 
-  ggtitle("Predator vs. Prey Population") +
-  labs(y="Prey Population Size", x = "Predator Population Size")
 
 #alpha2
 params = c(b, e, s, w, d, alpha2)
@@ -297,9 +282,6 @@ ggplot(modelOutput) +
   geom_line(aes(x = time, y = P), colour = "red") +
   ggtitle("Initial Parameters \nwith alpha = 1/2*alpha") +
   labs(y="Population Size", x = "Time")
-ggplot(modelOutput, aes(H,P)) + geom_point() + 
-  ggtitle("Predator vs. Prey Population") +
-  labs(y="Prey Population Size", x = "Predator Population Size")
 ```
 
 ## Prey Birthrate
@@ -311,7 +293,7 @@ params = c(b, e, s, w, d, alpha)
 modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
-b1 = ggplot(modelOutput) + 
+ggplot(modelOutput) + 
   geom_line(aes(x = time, y = H), colour = "blue") + 
   geom_line(aes(x = time, y = P), colour = "red") + 
   ggtitle("Low Birhrate") +
@@ -323,15 +305,11 @@ params = c(b, e, s, w, d, alpha)
 modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
-b2 = ggplot(modelOutput) + 
+ggplot(modelOutput) + 
   geom_line(aes(x = time, y = H), colour = "blue") + 
   geom_line(aes(x = time, y = P), colour = "red") + 
   ggtitle("High Birthrate") +
   labs(y="Population Size", x = "Time")
-
-# Arrange graphs together
-grid.arrange(b1, b2, ncol = 2)
-
 ```
 
 ### At low birth rate (0.2-1.6)
@@ -353,7 +331,7 @@ params = c(b, e, s, w, d, alpha)
 modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
-e1 = ggplot(modelOutput) + 
+ggplot(modelOutput) + 
   geom_line(aes(x = time, y = H), colour = "blue") + 
   geom_line(aes(x = time, y = P), colour = "red") + 
   ggtitle("Low Efficiency") +
@@ -365,7 +343,7 @@ params = c(b, e, s, w, d, alpha)
 modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
-e2 = ggplot(modelOutput) + 
+ggplot(modelOutput) + 
   geom_line(aes(x = time, y = H), colour = "blue") + 
   geom_line(aes(x = time, y = P), colour = "red") + 
   ggtitle("Medium Efficiency") +
@@ -377,15 +355,11 @@ params = c(b, e, s, w, d, alpha)
 modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
-e3 = ggplot(modelOutput) + 
+ggplot(modelOutput) + 
   geom_line(aes(x = time, y = H), colour = "blue") + 
   geom_line(aes(x = time, y = P), colour = "red") + 
   ggtitle("High Efficiency") +
   labs(y="Population Size", x = "Time")
-
-# Arrange graphs together
-grid.arrange(e1, e2, e3 , ncol = 3)
-
 ```
 
 ### Low efficiency conversion (0.0175-0.0525)
@@ -412,7 +386,7 @@ params = c(b, e, s, w, d, alpha)
 modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
-s1 = ggplot(modelOutput) + 
+ggplot(modelOutput) + 
   geom_line(aes(x = time, y = H), colour = "blue") + 
   geom_line(aes(x = time, y = P), colour = "red") + 
   ggtitle("Low Death Rate") +
@@ -424,15 +398,11 @@ params = c(b, e, s, w, d, alpha)
 modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
-s2 = ggplot(modelOutput) + 
+ggplot(modelOutput) + 
   geom_line(aes(x = time, y = H), colour = "blue") + 
   geom_line(aes(x = time, y = P), colour = "red") + 
   ggtitle("High Death Rate") +
   labs(y="Population Size", x = "Time")
-
-# Arrange graphs together
-grid.arrange(s1, s2, ncol = 2)
-
 ```
 
 ### Low Death Rate (0.05-0.2)
