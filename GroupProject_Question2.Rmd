@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(deSolve)
 library(ggplot2)
+library(grid)
 ```
 
 ## Model Description
@@ -19,23 +20,32 @@ The Rosenzweig-MacArthur model describes predator-prey dynamics. It is based off
 
 *Predator kill density cannot grow indefinitely; there reaches a maximum no matter how large the prey density is.*
 
-There are three qualitative results for this model:
-
-*Prey go to carrying capacity, predators go extinct.*
-
-*Prey and predators coexist in stable equilibrium.*
-
-*Prey and predators coexist in an oscillatory manner.*
-
-
 ## Model Equations
 
 Rosenzweig and MacArthur described the prey population (H) and the predator population (P) with the following equations:
 
-$dh/dt = bH(1-alphaH) - wHP/(d + H)$
+$dh/dt = b*H*(1-alpha*H) - w*H*P/(d + H)$
 
-$dP/dt = ewHP/(d + H) - sP$
+$dP/dt = e*w*H*P/(d + H) - s*P$
 
+## Qualitative Results
+
+There are three qualitative results for this model:
+
+
+*1. Prey go to carrying capacity, predators go extinct.*
+
+$H^* = 1/aplha = k$ 
+and 
+$P^* = 0$
+
+*2. Prey and predators coexist in stable equilibrium.*
+
+$H^* = s*d/(e*w - s)$ 
+and 
+$P^* = (b*H^* - b*d*alpha - b*alpha*H^**H^* + d*b)/w$
+
+*3. Prey and predators coexist in an oscillatory manner.* 
 
 Let's begin by writing a function that describes the model:
 
@@ -115,31 +125,31 @@ ggplot(modelOutput, aes(H,P)) + geom_point() +
   labs(y="Prey Population Size", x = "Predator Population Size")
 ```
 
-## Describing Role of Parameters
+# Describing Role of Parameters
 
 Let's now change individual parameters in order to show the role that each one has 
 
-# -------------------
-# Predator Attack Rate
-# -------------------
-###Low Attack Rate: 
+
+## Predator Attack Rate
+
+### Low Attack Rate: 
 
   Low attack rate means that predators cannot sustain themselves, and their population goes to zero
   
   Prey population reach self-limiting equilibrium
 
-###High Attack Rate
+### High Attack Rate
 
   Predators are able to survive
   
-  High attack rate implies that prey will be driven to a small population. Predators can't survive if prey population is small, so they decreases
+  High attack rate implies that prey will be driven to a small population. Predators can't survive if prey population is small, so they    decreases
   
   As predator population decreases, prey population is able to increase. The cycle repeats
   
   Long-term behaivor is stable equilibrium
 
 
-```{r Predator Attack Rate}
+```{r echo=FALSE}
 ##W - the Predator Attack Rate
 w1 = 2*w
 w2 = 1/2*w
@@ -157,9 +167,6 @@ ggplot(modelOutput) +
   geom_line(aes(x = time, y = P), colour = "red") + 
   ggtitle("Initial Parameters \nwith w = 2*w") +
   labs(y="Population Size", x = "Time")
-ggplot(modelOutput, aes(H,P)) + geom_point() + 
-  ggtitle("Predator vs. Prey Population") +
-  labs(y="Prey Population Size", x = "Predator Population Size")
 
 #w2
 params = c(b, e, s, w2, d, alpha)
@@ -174,17 +181,13 @@ ggplot(modelOutput) +
   geom_line(aes(x = time, y = P), colour = "red") +
   ggtitle("Initial Parameters \nwith w = 1/2*w") +
   labs(y="Population Size", x = "Time")
-ggplot(modelOutput, aes(H,P)) + geom_point() + 
-  ggtitle("Predator vs. Prey Population") +
-  labs(y="Prey Population Size", x = "Predator Population Size")
-
 ```
 
-# ---------------
-# Prey Denisty to Maximize Predator Attack
-# ---------------
+
+## Prey Denisty to Maximize Predator Attack
+
   
-###Low d values
+### Low d values
 
   Predator population can maximize attack rate more easily
   
@@ -194,14 +197,14 @@ ggplot(modelOutput, aes(H,P)) + geom_point() +
   
   The system oscillates 
   
-###High d values 
+### High d values 
 
   Predators cannot reach an attack rate that sustains their population
   
   Predator population goes to zero; prey go to carrying capacity
   
   
-```{r Prey Denisty to Maximize Predator Attack}
+```{r echo=FALSE}
 ##d - Prey population when predator kill rate is 1/2*max
 d1 = 2*d
 d2 = 1/2*d
@@ -220,9 +223,6 @@ ggplot(modelOutput) +
   geom_line(aes(x = time, y = P), colour = "red") + 
   ggtitle("Initial Parameters \nwith d = 2*d") +
   labs(y="Population Size", x = "Time")
-ggplot(modelOutput, aes(H,P)) + geom_point() + 
-  ggtitle("Predator vs. Prey Population") +
-  labs(y="Prey Population Size", x = "Predator Population Size")
 
 #d2
 params = c(b, e, s, w, d2, alpha)
@@ -237,16 +237,12 @@ ggplot(modelOutput) +
   geom_line(aes(x = time, y = P), colour = "red") +
   ggtitle("Initial Parameters \nwith d = 1/2*d") +
   labs(y="Population Size", x = "Time")
-ggplot(modelOutput, aes(H,P)) + geom_point() + 
-  ggtitle("Predator vs. Prey Population") +
-  labs(y="Prey Population Size", x = "Predator Population Size")
 ```
 
-# -----------------------------------------
-# Carrying Capacity/Alpha (alpha = 1/k)
-# -----------------------------------------
+
+## Carrying Capacity/Alpha (alpha = 1/k)
   
-###Low alpha
+### Low alpha
 
   Low alpha implies higher carrying capacity of prey
   
@@ -254,14 +250,14 @@ ggplot(modelOutput, aes(H,P)) + geom_point() +
   
   System oscillates
   
-###High alpha
+### High alpha
 
   Carrying Capacity is lower, and predators cannot sustain themseleves when there are less prey
   
   Prey go to their carrying capacity 
   
   
-```{r Prey Self-Limiting Factor}
+```{r echo=FALSE}
 ##alpha - Prey self-limiting factor 
 alpha1 = 2*alpha
 alpha2 = 1/2*alpha
@@ -280,9 +276,6 @@ ggplot(modelOutput) +
   geom_line(aes(x = time, y = P), colour = "red") + 
   ggtitle("Initial Parameters \nwith alpha = 2*alpha") +
   labs(y="Population Size", x = "Time")
-ggplot(modelOutput, aes(H,P)) + geom_point() + 
-  ggtitle("Predator vs. Prey Population") +
-  labs(y="Prey Population Size", x = "Predator Population Size")
 
 #alpha2
 params = c(b, e, s, w, d, alpha2)
@@ -297,42 +290,9 @@ ggplot(modelOutput) +
   geom_line(aes(x = time, y = P), colour = "red") +
   ggtitle("Initial Parameters \nwith alpha = 1/2*alpha") +
   labs(y="Population Size", x = "Time")
-ggplot(modelOutput, aes(H,P)) + geom_point() + 
-  ggtitle("Predator vs. Prey Population") +
-  labs(y="Prey Population Size", x = "Predator Population Size")
 ```
 
 ## Prey Birthrate
-  
-```{r echo=FALSE}
-# Create graph for low birthrate
-b = 1.2
-params = c(b, e, s, w, d, alpha)
-modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
-modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
-
-b1 = ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
-  ggtitle("Low Birhrate") +
-  labs(y="Population Size", x = "Time")
-
-# Create graph for high birthrate
-b = 2.6
-params = c(b, e, s, w, d, alpha)
-modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
-modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
-
-b2 = ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
-  ggtitle("High Birthrate") +
-  labs(y="Population Size", x = "Time")
-
-# Arrange graphs together
-grid.arrange(b1, b2, ncol = 2)
-
-```
 
 ### At low birth rate (0.2-1.6)
 Prey and Predator population will decrease initially before increase in prey then increase in predator to equilibrium.
@@ -344,49 +304,33 @@ Prey birthrate increases to self-limiting density before Predator decreases Prey
 
 Initial Predator population does not require as much Prey to sustain itself, therefore Prey population reaches self-limiting density. Predator population will continue to increase until capacity is reached. Capacity for Prey and Predator will increase as birth rate of prey increases
 
-## Conversion efficiency of Prey to Predator
-  
 ```{r echo=FALSE}
-# Create graph for low efficiency
-e = 0.0525
+# Create graph for low birthrate
+b = 1.2
 params = c(b, e, s, w, d, alpha)
 modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
-e1 = ggplot(modelOutput) + 
+ggplot(modelOutput) + 
   geom_line(aes(x = time, y = H), colour = "blue") + 
   geom_line(aes(x = time, y = P), colour = "red") + 
-  ggtitle("Low Efficiency") +
+  ggtitle("Low Birhrate") +
   labs(y="Population Size", x = "Time")
 
-# Create graph for medium efficiency
-e = 0.0875
+# Create graph for high birthrate
+b = 2.6
 params = c(b, e, s, w, d, alpha)
 modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
-e2 = ggplot(modelOutput) + 
+ggplot(modelOutput) + 
   geom_line(aes(x = time, y = H), colour = "blue") + 
   geom_line(aes(x = time, y = P), colour = "red") + 
-  ggtitle("Medium Efficiency") +
+  ggtitle("High Birthrate") +
   labs(y="Population Size", x = "Time")
-
-# Create graph for high efficiency
-e = 0.1050
-params = c(b, e, s, w, d, alpha)
-modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
-modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
-
-e3 = ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
-  ggtitle("High Efficiency") +
-  labs(y="Population Size", x = "Time")
-
-# Arrange graphs together
-grid.arrange(e1, e2, e3 , ncol = 3)
-
 ```
+
+## Conversion efficiency of Prey to Predator
 
 ### Low efficiency conversion (0.0175-0.0525)
 Rate of Prey will initially decrease because Predator is present in system. 
@@ -403,7 +347,57 @@ Rate of exchange from Prey to Predator occurs too quickly.
 
 System will change from decreasing Prey and increasing Predator until Predator density is reached. Predators will decrease from starvation or lack of Prey to support system until Prey numbers bounch back. Increase in efficiency will increase maximum capacity of predator
 
+  
+```{r echo=FALSE}
+# Create graph for low efficiency
+e = 0.0525
+params = c(b, e, s, w, d, alpha)
+modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
+modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
+
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "blue") + 
+  geom_line(aes(x = time, y = P), colour = "red") + 
+  ggtitle("Low Efficiency") +
+  labs(y="Population Size", x = "Time")
+
+# Create graph for medium efficiency
+e = 0.0875
+params = c(b, e, s, w, d, alpha)
+modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
+modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
+
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "blue") + 
+  geom_line(aes(x = time, y = P), colour = "red") + 
+  ggtitle("Medium Efficiency") +
+  labs(y="Population Size", x = "Time")
+
+# Create graph for high efficiency
+e = 0.1050
+params = c(b, e, s, w, d, alpha)
+modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
+modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
+
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "blue") + 
+  geom_line(aes(x = time, y = P), colour = "red") + 
+  ggtitle("High Efficiency") +
+  labs(y="Population Size", x = "Time")
+```
+
 ## Predator Death Rate
+
+### Low Death Rate (0.05-0.2)
+Low death rate leads to depletion of Prey population
+
+Decrease in Prey population decreases Predator density limit. Oscillation of both population until equilibrium is reached, or will continue to oscillate between capacity and 0
+
+#### High Death Rate (0.25-0.8)
+Initial dip in Prey population results from initial Predator population
+
+High death rate results in eradication of Predator and increase of Prey Population to self-limiting density
+
   
 ```{r echo=FALSE}
 # Create graph for low death rate
@@ -412,7 +406,7 @@ params = c(b, e, s, w, d, alpha)
 modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
-s1 = ggplot(modelOutput) + 
+ggplot(modelOutput) + 
   geom_line(aes(x = time, y = H), colour = "blue") + 
   geom_line(aes(x = time, y = P), colour = "red") + 
   ggtitle("Low Death Rate") +
@@ -424,23 +418,83 @@ params = c(b, e, s, w, d, alpha)
 modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
-s2 = ggplot(modelOutput) + 
+ggplot(modelOutput) + 
   geom_line(aes(x = time, y = H), colour = "blue") + 
   geom_line(aes(x = time, y = P), colour = "red") + 
   ggtitle("High Death Rate") +
   labs(y="Population Size", x = "Time")
-
-# Arrange graphs together
-grid.arrange(s1, s2, ncol = 2)
-
 ```
 
-### Low Death Rate (0.05-0.2)
-Low death rate leads to depletion of Prey population
 
-Decrease in Prey population decreases Predator density limit. Oscillation of both population until equilibrium is reached, or will continue to oscillate between capacity and 0
+# Paradox of Enrichment
 
-#### High Death Rate (0.25-0.8)
-Initial dip in Prey population results from initial Predator population
+Conceptually, higher carrying capacity (lower alpha) should lead to predator stability because more prey will buffer the population from extinction. 
 
-High death rate results in eradication of Predator and increase of Prey Population to self-limiting density
+However, the RM model shows that there is a negative relationship between prey carrying capacity and predator stability: as alpha decreases (carrying capacity increases), the population of predators becomes less stable. This is termed the *Paradox of Enrichment*. Let's see some examples of this:
+
+```{r echo=FALSE}
+### Paradox of Enrichment 
+b = 0.8
+e = 0.07
+s = 0.2
+w = 5
+d = 400
+
+#0.00125
+params = c(b, e, s, w, d, 0.00125)
+modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
+
+#Subsetting the Results
+modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
+
+#Graphing the Results
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "blue") + 
+  geom_line(aes(x = time, y = P), colour = "red") + 
+  ggtitle("Initial Parameters \nwith alpha = 0.00125") +
+  labs(y="Population Size", x = "Time")
+
+#0.0009
+params = c(b, e, s, w, d, 0.0009)
+modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
+
+#Subsetting the Results
+modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
+
+#Graphing the Results
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "blue") + 
+  geom_line(aes(x = time, y = P), colour = "red") + 
+  ggtitle("Initial Parameters \nwith alpha = 0.0009") +
+  labs(y="Population Size", x = "Time")
+
+#0.0007
+params = c(b, e, s, w, d, 0.0007)
+modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
+
+#Subsetting the Results
+modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
+
+#Graphing the Results
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "blue") + 
+  geom_line(aes(x = time, y = P), colour = "red") + 
+  ggtitle("Initial Parameters \nwith alpha = 0.0007") +
+  labs(y="Population Size", x = "Time")
+
+#0.0005
+params = c(b, e, s, w, d, 0.0005)
+modelSim = ode(y=Y0, times = 1:800, func = ddRM, parms = params)
+
+#Subsetting the Results
+modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
+
+#Graphing the Results
+ggplot(modelOutput) + 
+  geom_line(aes(x = time, y = H), colour = "blue") + 
+  geom_line(aes(x = time, y = P), colour = "red") + 
+  ggtitle("Initial Parameters \nwith alpha = 0.0005") +
+  labs(y="Population Size", x = "Time")
+```
+
+At low carrying capacities, the self-limiting aspect of the prey population leads to a stable equilibrium between predators and prey. However, as carrying capacity increases, a certain stability threshold is passed. Prey population is able to grow to such a point that predators can eat enough prey, driving the prey population down, which in turn drives the predator population down, leading to oscillation.
