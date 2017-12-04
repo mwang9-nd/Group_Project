@@ -1,0 +1,278 @@
+---
+title: "Group_Project"
+author: "SZD"
+date: "November 27, 2017"
+output: html_document
+---
+
+#Group Project Question 1 - Lotka-Volterra Model
+
+Below we load the required modules, set initial parameters, and use the function ode() to run our model.
+
+
+```{r}
+
+library(deSolve)
+library(ggplot2)
+
+predPreySim<-function(t,y,p){
+  herbivore=y[1]
+  carnivore=y[2]
+  h_birthrate=p[1]
+  c_attackrate=p[2]
+  h_c_efficiency=p[3]
+  c_death=p[4]
+  dHerb_dt=(h_birthrate*herbivore)-(c_attackrate*carnivore*herbivore)
+  dCarn_dt=(h_c_efficiency*c_attackrate*carnivore*herbivore)-(c_death*carnivore)
+  return(list(c(dHerb_dt,dCarn_dt)))
+}
+
+
+y = c(25,5)
+p = c(0.5,0.02,0.1,0.2)
+times=seq(from=1,to=100,by=0.1)
+
+modelSim=ode(y=y,times=times,func=predPreySim,parms=p)
+colnames(modelSim)[2] <- "herbivore"
+colnames(modelSim)[3] <- "predator"
+modelSim2 <- as.data.frame(modelSim)
+ggplot(data=modelSim2,aes(x=time)) + geom_line(aes(y=herbivore), colour="red") + geom_line(aes(y=predator),colour="blue")+theme_classic()+ylab("Counts")
+
+```
+
+Initial summary of output below. How the parameters change will be determined by comparing results to above graph and summary below. 
+
+```{r}
+summary(modelSim)
+```
+
+###Changing the number of prey
+
+Change prey from 25 to 125
+```{r}
+y = c(125,5)
+p = c(0.5,0.02,0.1,0.2)
+times=seq(from=1,to=100,by=0.1)
+
+modelSim=ode(y=y,times=times,func=predPreySim,parms=p)
+colnames(modelSim)[2] <- "herbivore"
+colnames(modelSim)[3] <- "predator"
+modelSim2 <- as.data.frame(modelSim)
+ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+geom_line(aes(x=time,y=predator),color="royalblue")+theme_classic()+ylab("Counts")
+```
+```{r}
+summary(modelSim)
+```
+
+Change prey from 25 to 5
+
+```{r}
+y = c(5,5)
+p = c(0.5,0.02,0.1,0.2)
+times=seq(from=1,to=100,by=0.1)
+
+modelSim=ode(y=y,times=times,func=predPreySim,parms=p)
+colnames(modelSim)[2] <- "herbivore"
+colnames(modelSim)[3] <- "predator"
+modelSim2 <- as.data.frame(modelSim)
+ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+geom_line(aes(x=time,y=predator),color="royalblue")+theme_classic()+ylab("Counts")
+```
+
+```{r}
+summary(modelSim)
+```
+
+The above two models changed the number of prey from 25 to 300 and 5, respectively. Interestingly, changing the prey number does not change much of the overall model. There are some slight changes in overall min/max of predator/prey, however the frequency does not seem to change at all. Interestingly, decrerasing the inital number of prey increased the maximum number of prey and predators. The relative numbers between the predator and prey does not change much.
+
+###Changing the number of predators
+
+Change predator from 5 to 1
+
+```{r}
+y = c(25,1)
+p = c(0.5,0.02,0.1,0.2)
+times=seq(from=1,to=100,by=0.1)
+
+modelSim=ode(y=y,times=times,func=predPreySim,parms=p)
+colnames(modelSim)[2] <- "herbivore"
+colnames(modelSim)[3] <- "predator"
+modelSim2 <- as.data.frame(modelSim)
+ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+geom_line(aes(x=time,y=predator),color="royalblue")+theme_classic()+ylab("Counts")
+```
+
+```{r}
+summary(modelSim)
+```
+Change predator from 5 to 25
+
+```{r}
+y = c(25,25)
+p = c(0.5,0.02,0.1,0.2)
+times=seq(from=1,to=100,by=0.1)
+
+modelSim=ode(y=y,times=times,func=predPreySim,parms=p)
+colnames(modelSim)[2] <- "herbivore"
+colnames(modelSim)[3] <- "predator"
+modelSim2 <- as.data.frame(modelSim)
+ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+geom_line(aes(x=time,y=predator),color="royalblue")+theme_classic()+ylab("Counts")
+```
+
+```{r}
+summary(modelSim)
+```
+
+Unlike changin the intial number of prey, changing the inital number of predators dramatically changes the model ouptut. For starters, the frequency for both prey/predator are decreased/increased when the inital predator count is decreased/increased. Additionally, the inital number of predators seems to have a bigger impact on both max/min numbers of both predator/prey. The relative numbers between the predator/prey does not change much.
+
+###Changing the prey birthrate
+
+Change prey birthrate from 0.5 to 0.1 (and time to 200)
+```{r}
+y = c(25,5)
+p = c(0.1,0.02,0.1,0.2)
+times=seq(from=1,to=200,by=0.1)
+
+modelSim=ode(y=y,times=times,func=predPreySim,parms=p)
+colnames(modelSim)[2] <- "herbivore"
+colnames(modelSim)[3] <- "predator"
+modelSim2 <- as.data.frame(modelSim)
+ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+geom_line(aes(x=time,y=predator),color="royalblue")+theme_classic()+ylab("Counts")
+```
+
+```{r}
+summary(modelSim)
+```
+
+Change prey birthrate from 0.5 to 2.5
+```{r}
+y = c(25,5)
+p = c(2.5,0.02,0.1,0.2)
+times=seq(from=1,to=100,by=0.1)
+
+modelSim=ode(y=y,times=times,func=predPreySim,parms=p)
+colnames(modelSim)[2] <- "herbivore"
+colnames(modelSim)[3] <- "predator"
+modelSim2 <- as.data.frame(modelSim)
+ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+geom_line(aes(x=time,y=predator),color="royalblue")+theme_classic()+ylab("Counts")
+```
+```{r}
+summary(modelSim)
+```
+
+Changing prey birthtreate has significant effects on both max/min of predator prey and of the frequency of both also. Decreasing prey birthrate significantly decreased both frequency and max/min of both predator/prey, much more than changing the inital numbers of prey/predator. Additionally, the prey birthrate seems to havve a strong effect on the relative numbers between prey/predator, as shown by the differences in mean between the two. Additionally, increasing prey birthrate causes an interesting phenomenon where most of the times the prey are mostly dead but shoot up exponentially every now and then, whilst decreasing birthrate causes a moreconservative change in the number of prey, more like a sinusoidal curve.
+
+### Changing predator attack rate
+
+Change predator attack rate from 0.02 to 0.1
+```{r}
+y = c(25,5)
+p = c(0.5,0.1,0.1,0.2)
+times=seq(from=1,to=100,by=0.1)
+
+modelSim=ode(y=y,times=times,func=predPreySim,parms=p)
+colnames(modelSim)[2] <- "herbivore"
+colnames(modelSim)[3] <- "predator"
+modelSim2 <- as.data.frame(modelSim)
+ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+geom_line(aes(x=time,y=predator),color="royalblue")+theme_classic()+ylab("Counts")
+```
+
+```{r}
+summary(modelSim)
+```
+
+
+Change predator attack rate from 0.02 to 0.004
+```{r}
+y = c(25,5)
+p = c(0.5,0.004,0.1,0.2)
+times=seq(from=1,to=100,by=0.1)
+
+modelSim=ode(y=y,times=times,func=predPreySim,parms=p)
+colnames(modelSim)[2] <- "herbivore"
+colnames(modelSim)[3] <- "predator"
+modelSim2 <- as.data.frame(modelSim)
+ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+geom_line(aes(x=time,y=predator),color="royalblue")+theme_classic()+ylab("Counts")
+```
+
+```{r}
+summary(modelSim)
+```
+
+Changing predator attack rate has significant effects on the overall model. Both the max/min and frequecy of predator/prey are significantly effected. Increasing the attack rate significantly decreases both the number of predators and prey and also increases the frequency of both predator/prey cycle, whilst decreasing the attack rate does the opposite. Additonally, decreasing the attack rate brings the prey to near extinction levels, as evidenced by the 0.08 minimum of prey, perhaps making it an unsustainable model. However, the relationship between the means does not change much from the original model (~1:4 ratio for predator:prey).
+
+### Changing conversion efficiency
+
+Change conversion efficiency from 0.1 to 0.5 
+```{r}
+y = c(25,5)
+p = c(0.5,0.02,0.5,0.2)
+times=seq(from=1,to=100,by=0.1)
+
+modelSim=ode(y=y,times=times,func=predPreySim,parms=p)
+colnames(modelSim)[2] <- "herbivore"
+colnames(modelSim)[3] <- "predator"
+modelSim2 <- as.data.frame(modelSim)
+ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+geom_line(aes(x=time,y=predator),color="royalblue")+theme_classic()+ylab("Counts")
+```
+
+```{r}
+summary(modelSim)
+```
+
+
+Change conversion efficiency from 0.1 to 0.02
+```{r}
+y = c(25,5)
+p = c(0.5,0.02,0.02,0.2)
+times=seq(from=1,to=100,by=0.1)
+
+modelSim=ode(y=y,times=times,func=predPreySim,parms=p)
+colnames(modelSim)[2] <- "herbivore"
+colnames(modelSim)[3] <- "predator"
+modelSim2 <- as.data.frame(modelSim)
+ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+geom_line(aes(x=time,y=predator),color="royalblue")+theme_classic()+ylab("Counts")
+```
+
+```{r}
+summary(modelSim)
+```
+
+Changing conversion efficiency also changes min/max, frequency, and predator/prey relationships. However, the most interesting aspect of changing the conversion efficency is 
+
+
+Change p[4] from 0.2 to 1
+```{r}
+y = c(25,5)
+p = c(0.5,0.02,0.1,1)
+times=seq(from=1,to=100,by=0.1)
+
+modelSim=ode(y=y,times=times,func=predPreySim,parms=p)
+colnames(modelSim)[2] <- "herbivore"
+colnames(modelSim)[3] <- "predator"
+modelSim2 <- as.data.frame(modelSim)
+ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+geom_line(aes(x=time,y=predator),color="royalblue")+theme_classic()+ylab("Counts")
+```
+
+```{r}
+summary(modelSim)
+```
+
+Change p[4] from 0.2 to 0.04
+```{r}
+y = c(25,5)
+p = c(0.5,0.02,0.1,0.02)
+times=seq(from=1,to=1000,by=0.1)
+
+modelSim=ode(y=y,times=times,func=predPreySim,parms=p)
+colnames(modelSim)[2] <- "herbivore"
+colnames(modelSim)[3] <- "predator"
+modelSim2 <- as.data.frame(modelSim)
+
+ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+geom_line(aes(x=time,y=predator),color="royalblue")+theme_classic()+ylab("Counts")
+```
+
+```{r}
+summary(modelSim)
+```
+
+
+
