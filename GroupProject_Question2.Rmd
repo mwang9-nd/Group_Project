@@ -430,3 +430,11 @@ ggplot(modelOutput) +
   labs(y="Population Size", x = "Time") +
   theme_classic()
 ```
+
+# Question 2 Responses
+
+## How do the dynamics differ from Lotka-Volterra?
+
+## What can you say about the “role” of each parameter, especially what causes the dyamics to differ between the L-V and R-M models?
+
+## What is the relationship between parameter values and predator abundance?
