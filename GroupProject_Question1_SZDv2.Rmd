@@ -277,6 +277,6 @@ summary(modelSim)
 
 Predator death rate also has significant effects on the max/min and frequency in predator/prey. Additionally, the relative means between the predator/prey relationships is also effected. Increasing predator death rate increases prey counts (both max and mean) but also increases the max predator count. Decreasing predator death rate has the opposite effect while both increase the frequency.
 
-### Conclusion
+### Conclusion 
 
 OVerall, all of the state variable and parameters have some effect on the model, whether they change the max/min of the prey/predator, change the overall frequency, change the rate of increase/decrease, or change the relative means of the two populations. What is interesting to note is the models in which the predator/prey minimun numbers reach <1. Realistically, it seems impossible to have half a predator or half a prey, suggesting these models are unsustainable. This suggests, that especially when changing the parameters, one must be careful that the parameters are not changed significantly since the model may become unrealistic, unless that is the purpose.
