@@ -567,7 +567,7 @@ Let's now change individual parameters in order to show the role that each one h
   
   As predator population decreases, prey population is able to increase. The cycle repeats
   
-  Long-term behaivor is stable equilibrium
+  Long-term behaivor is oscillation
 
 
 ```{r echo=FALSE}
@@ -849,8 +849,8 @@ ggplot(modelOutput) +
 
 ### How do the dynamics differ from Lotka-Volterra?
   
-Dynamics in R-M models allow  for an equilibrium population. The L-V population conistantly oscillates between Prey 
-depletion and Predator starvation to Prey 
+Dynamics in R-M models allow for a stable equilibrium population. The L-V population conistantly oscillates between Prey 
+depletion and Predator starvation to Prey. In the absence of predators, Prey in the L-V model grow exponentially, while Prey in the R-M model grow logistically.   
 
 ## What can you say about the role of each parameter, especially what causes the dyamics to differ between the L-V and R-M models?
   
@@ -858,7 +858,7 @@ The extra parameters seen in the R-M model adds complexity that allows for both 
 
 ## What is the relationship between parameter values and predator abundance?
 
-Predator abundance has a higher capacity when Prey has a higher birthrate, higher PRey self-limiting capacity, and lower conversion of Predator to Prey.
+Predator abundance has a higher capacity when Prey birthrate (b) is higher, Prey carrying capacity is higher (lower alpha), Prey-to-Predator conversion (e) is higher, Preadator attack rate (w) is higher, Prey population to maximize predator attack rate (d) is lower, and Predator death rate (s) is lower.
 
 
 # Paradox of Enrichment
