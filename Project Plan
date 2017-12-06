@@ -1,0 +1,26 @@
+Write a function for LV
+
+Set initial parameters, time step = 0.1
+
+Run simulations
+
+Set plot time vs population size
+
+play with parameters, understand role and limitations of each parameter
+
+Write a function for RM
+
+Set initial parameters, time step = 0.1
+
+Run simulations
+
+Set plot time vs population size
+
+play with parameters, understand role and limitations of each parameter
+
+Split into two groups tackling each function, then push onto Github for collaborators to check.
+
+All analyze and contribute to discussion of role of parameters in each simulation set.
+
+Sage and Kate LV
+Logan and Michelle RM
