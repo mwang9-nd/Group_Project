@@ -845,23 +845,23 @@ ggplot(modelOutput) +
   ggtitle("High Death Rate") +
   labs(y="Population Size", x = "Time")
 ```
-# Question 2 Responses
+### Questions
 
-### How do the dynamics differ from Lotka-Volterra?
+#### How do the dynamics differ from Lotka-Volterra?
   
 Dynamics in R-M models allow for a stable equilibrium population. The L-V population conistantly oscillates between Prey 
 depletion and Predator starvation to Prey. In the absence of predators, Prey in the L-V model grow exponentially, while Prey in the R-M model grow logistically.   
 
-## What can you say about the role of each parameter, especially what causes the dyamics to differ between the L-V and R-M models?
+#### What can you say about the role of each parameter, especially what causes the dyamics to differ between the L-V and R-M models?
   
 The extra parameters seen in the R-M model adds complexity that allows for both populations to reach a population size in which co-habitation can be possible within some range of the parameters.
 
-## What is the relationship between parameter values and predator abundance?
+#### What is the relationship between parameter values and predator abundance?
 
 Predator abundance has a higher capacity when Prey birthrate ($b$) is higher, Prey carrying capacity is higher (lower $\alpha$), Prey-to-Predator conversion ($e$) is higher, Preadator attack rate ($w$) is higher, Prey population to maximize predator attack rate ($d$) is lower, and Predator death rate ($s$) is lower.
 
 
-# Paradox of Enrichment
+#### Paradox of Enrichment
 
 Conceptually, higher carrying capacity (lower $\alpha$) should lead to predator stability because more prey will buffer the population from extinction. 
 
