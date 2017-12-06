@@ -1,0 +1,53 @@
+---
+title: "Pseudocode"
+author: "Kate Vendrely"
+date: "12/6/2017"
+output: pdf_document
+---
+
+
+# Pseudocode for Lotka-Volterra Model
+
+Load packages (ggplot2, grid arrange, and deSolve packages)
+
+Write a custom function for Lotka Volterra model
+Unpack parameters:
+-herbivore and carnivore
+-birthrate, attackrate, efficiency, death
+Write equations dherbivore/dt and dcarnivore/dt
+
+Set parameters, initial state variables and time step (=0.1) based on the prompt
+
+Simulate the model using ode
+-define column names for the modelSim
+
+Convert modelSim to dataframe to plot
+
+Plot simulation using ggplot
+
+play with parameters, understand role and limitations of each parameter
+
+
+
+# Rosenzweig-MacArthur Model
+
+Load packages (ggplot2, grid arrange, and deSolve packages)
+
+Write a custom function for Lotka Volterra model
+Unpack parameters:
+-herbivore and carnivore
+-prey birthrate, predator attack rate, conversion efficiency, predator death rate, density of prey when predator's kill rate is 1/2*max, and prey self-limiting term
+Write equations dherbivore/dt and dcarnivore/dt (rates of change for prey and predator populations over time)
+
+Set parameters, initial state variables and time step (=0.1) based on the prompt
+
+Simulate the model using ode
+-define column names for the modelSim
+
+Convert modelSim to dataframe to plot
+
+Plot simulation using ggplot
+
+play with parameters, understand role and limitations of each parameter
+
+Explain parameters
