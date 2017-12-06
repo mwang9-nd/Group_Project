@@ -26,7 +26,7 @@ Below we load the required modules, set initial parameters, and use the function
 # Load the deSolve package required for solving differential equations in R and ggplot2 package for graphing
 library(deSolve)
 library(ggplot2)
-
+library(knitr)
 
 # Create a custom function for simulating Lotka-Volterra Competition Model
 predPreySim<-function(t,y,p){
@@ -65,7 +65,7 @@ Initial summary of output below. How the parameters change will be determined by
 
 ```{r}
 #show result summary of the data frame
-summary(modelSim)
+kable(summary(modelSim))
 ```
 
 
@@ -93,7 +93,7 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 ```
 ```{r}
 #show result summary of the data frame
-summary(modelSim)
+kable(summary(modelSim))
 ```
 
 Adjust initial parameters again. Change prey from 25 to 5.
@@ -118,7 +118,7 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 
 ```{r}
 #show result summary of the data frame
-summary(modelSim)
+kable(summary(modelSim))
 ```
 
 The above two models changed the number of prey from 25 to 125 and 5, respectively. Interestingly, changing the prey number does not change much of the overall model. There are some slight changes in overall min/max of predator/prey, however the frequency does not seem to change at all. Interestingly, decreasing the inital number of prey increased the maximum number of prey and predators. The relative numbers between the predator and prey does not change much.
@@ -149,7 +149,7 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 
 ```{r}
 #show result summary of the data frame
-summary(modelSim)
+kable(summary(modelSim))
 ```
 
 
@@ -175,7 +175,7 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 
 ```{r}
 #show result summary of the data frame
-summary(modelSim)
+kable(summary(modelSim))
 ```
 
 Unlike changing the intial number of prey, changing the inital number of predators dramatically changes the model ouptut. For starters, the frequency for both prey/predator are decreased/increased when the inital predator count is decreased/increased. Additionally, the inital number of predators seems to have a bigger impact on both max/min numbers of both predator/prey. The relative numbers between the predator/prey does not change much.
@@ -204,7 +204,7 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 
 ```{r}
 #show result summary of the data frame
-summary(modelSim)
+kable(summary(modelSim))
 ```
 
 Change prey birthrate from 0.5 to 2.5
@@ -227,7 +227,7 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 ```
 ```{r}
 #show result summary of the data frame
-summary(modelSim)
+kable(summary(modelSim))
 ```
 
 Changing prey birthrate has significant effects on both max/min of predator prey and of the frequency of both also. Decreasing prey birthrate significantly decreased both frequency and max/min of both predator/prey, much more than changing the inital numbers of prey/predator. Additionally, the prey birthrate seems to havve a strong effect on the relative numbers between prey/predator, as shown by the differences in mean between the two. Additionally, increasing prey birthrate causes an interesting phenomenon where most of the times the prey are mostly dead but shoot up exponentially every now and then, whilst decreasing birthrate causes a more conservative change in the number of prey, more like a sinusoidal curve.
@@ -256,7 +256,7 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 
 ```{r}
 #show result summary of the data frame
-summary(modelSim)
+kable(summary(modelSim))
 ```
 
 
@@ -282,7 +282,7 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 
 ```{r}
 #show result summary of the data frame
-summary(modelSim)
+kable(summary(modelSim))
 ```
 
 Changing predator attack rate has significant effects on the overall model. Both the max/min and frequecy of predator/prey are significantly effected. Increasing the attack rate significantly decreases both the number of predators and prey and also increases the frequency of both predator/prey cycle, whilst decreasing the attack rate does the opposite. Additonally, decreasing the attack rate brings the prey to near extinction levels, as evidenced by the 0.08 minimum of prey, perhaps making it an unsustainable model. However, the relationship between the means does not change much from the original model (~1:4 ratio for predator:prey).
@@ -312,7 +312,7 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 
 ```{r}
 #show result summary of the data frame
-summary(modelSim)
+kable(summary(modelSim))
 ```
 
 Change conversion efficiency from 0.1 to 0.02
@@ -337,7 +337,7 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 
 ```{r}
 #show result summary of the data frame
-summary(modelSim)
+kable(summary(modelSim))
 ```
 
 Changing conversion efficiency also changes min/max, frequency, and predator/prey relationships. However, the most interesting aspect of changing the conversion efficency is the change in relative means between the prey/predator relationship. Increasing conversion efficiency brings the relative number of prey much closer to the relative mean of the predator, as would be expected because the predator can more efficiently convert the prey into momre predators.
@@ -367,7 +367,7 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 
 ```{r}
 #show result summary of the data frame
-summary(modelSim)
+kable(summary(modelSim))
 ```
 
 Change predator death rate from 0.2 to 0.04
@@ -391,7 +391,7 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 
 ```{r}
 #show result summary of the data frame
-summary(modelSim)
+kable(summary(modelSim))
 ```
 
 Predator death rate also has significant effects on the max/min and frequency in predator/prey. Additionally, the relative means between the predator/prey relationships is also effected. Increasing predator death rate increases prey counts (both max and mean) but also increases the max predator count. Decreasing predator death rate has the opposite effect while both increase the frequency.
