@@ -61,6 +61,8 @@ ggplot(data=modelSim2,aes(x=time)) + geom_line(aes(y=herbivore), colour="firebri
 
 ```
 
+For all graphs red is prey and blue is predator. This is true for all graphs to follow.
+
 Initial summary of output below. How the parameters change will be determined by comparing results to above graph and summary below. 
 
 ```{r}
