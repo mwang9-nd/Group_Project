@@ -537,8 +537,8 @@ modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 #Graphing the Results
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
   ggtitle("Initial Parameters") +
   labs(y="Population Size", x = "Time")
 ggplot(modelOutput, aes(H,P)) + geom_point() + 
@@ -584,10 +584,11 @@ modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 #Graphing the Results
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
   ggtitle("Initial Parameters \nwith w = 2*w") +
-  labs(y="Population Size", x = "Time")
+  labs(y="Population Size", x = "Time") + 
+  theme_classic()
 
 #w2
 params = c(b, e, s, w2, d, alpha)
@@ -598,10 +599,11 @@ modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 #Graphing the Results
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") +
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") +
   ggtitle("Initial Parameters \nwith w = 1/2*w") +
-  labs(y="Population Size", x = "Time")
+  labs(y="Population Size", x = "Time") + 
+  theme_classic()
 ```
 
 
@@ -640,10 +642,11 @@ modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 #Graphing the Results
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
   ggtitle("Initial Parameters \nwith d = 2*d") +
-  labs(y="Population Size", x = "Time")
+  labs(y="Population Size", x = "Time") + 
+  theme_classic()
 
 #d2
 params = c(b, e, s, w, d2, alpha)
@@ -654,10 +657,11 @@ modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 #Graphing the Results
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") +
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") +
   ggtitle("Initial Parameters \nwith d = 1/2*d") +
-  labs(y="Population Size", x = "Time")
+  labs(y="Population Size", x = "Time") + 
+  theme_classic()
 ```
 
 
@@ -693,10 +697,11 @@ modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 #Graphing the Results
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
   ggtitle("Initial Parameters \nwith alpha = 2*alpha") +
-  labs(y="Population Size", x = "Time")
+  labs(y="Population Size", x = "Time") + 
+  theme_classic()
 
 #alpha2
 params = c(b, e, s, w, d, alpha2)
@@ -707,10 +712,11 @@ modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 #Graphing the Results
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") +
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") +
   ggtitle("Initial Parameters \nwith alpha = 1/2*alpha") +
-  labs(y="Population Size", x = "Time")
+  labs(y="Population Size", x = "Time") + 
+  theme_classic()
 ```
 
 ## Prey Birthrate
@@ -733,10 +739,11 @@ modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
   ggtitle("Low Birhrate") +
-  labs(y="Population Size", x = "Time")
+  labs(y="Population Size", x = "Time") + 
+  theme_classic()
 
 # Create graph for high birthrate
 b = 2.6
@@ -745,10 +752,11 @@ modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
   ggtitle("High Birthrate") +
-  labs(y="Population Size", x = "Time")
+  labs(y="Population Size", x = "Time") + 
+  theme_classic()
 ```
 
 ## Conversion efficiency of Prey to Predator
@@ -777,10 +785,11 @@ modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
   ggtitle("Low Efficiency") +
-  labs(y="Population Size", x = "Time")
+  labs(y="Population Size", x = "Time") + 
+  theme_classic()
 
 # Create graph for medium efficiency
 e = 0.0875
@@ -789,10 +798,11 @@ modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
   ggtitle("Medium Efficiency") +
-  labs(y="Population Size", x = "Time")
+  labs(y="Population Size", x = "Time") + 
+  theme_classic()
 
 # Create graph for high efficiency
 e = 0.1050
@@ -801,10 +811,11 @@ modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
   ggtitle("High Efficiency") +
-  labs(y="Population Size", x = "Time")
+  labs(y="Population Size", x = "Time") + 
+  theme_classic()
 ```
 
 ## Predator Death Rate
@@ -828,10 +839,11 @@ modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
   ggtitle("Low Death Rate") +
-  labs(y="Population Size", x = "Time")
+  labs(y="Population Size", x = "Time") + 
+  theme_classic()
 
 # Create graph for high death rate
 s = 0.6
@@ -840,10 +852,11 @@ modelSim = ode(y=Y0, times = times, func = ddRM, parms = params)
 modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
   ggtitle("High Death Rate") +
-  labs(y="Population Size", x = "Time")
+  labs(y="Population Size", x = "Time") + 
+  theme_classic()
 ```
 ### Questions
 
@@ -884,10 +897,11 @@ modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 #Graphing the Results
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
   ggtitle("Initial Parameters \nwith alpha = 0.00125") +
-  labs(y="Population Size", x = "Time")
+  labs(y="Population Size", x = "Time") + 
+  theme_classic()
 
 #0.0009
 params = c(b, e, s, w, d, 0.0009)
@@ -898,10 +912,11 @@ modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 #Graphing the Results
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
   ggtitle("Initial Parameters \nwith alpha = 0.0009") +
-  labs(y="Population Size", x = "Time")
+  labs(y="Population Size", x = "Time") + 
+  theme_classic()
 
 #0.0007
 params = c(b, e, s, w, d, 0.0007)
@@ -912,10 +927,11 @@ modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 #Graphing the Results
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
   ggtitle("Initial Parameters \nwith alpha = 0.0007") +
-  labs(y="Population Size", x = "Time")
+  labs(y="Population Size", x = "Time") + 
+  theme_classic()
 
 #0.0005
 params = c(b, e, s, w, d, 0.0005)
@@ -926,10 +942,11 @@ modelOutput = data.frame(time=modelSim[,1],H=modelSim[,2],P = modelSim[,3])
 
 #Graphing the Results
 ggplot(modelOutput) + 
-  geom_line(aes(x = time, y = H), colour = "blue") + 
-  geom_line(aes(x = time, y = P), colour = "red") + 
+  geom_line(aes(x = time, y = H), colour = "firebrick") + 
+  geom_line(aes(x = time, y = P), colour = "royalblue") + 
   ggtitle("Initial Parameters \nwith alpha = 0.0005") +
-  labs(y="Population Size", x = "Time")
+  labs(y="Population Size", x = "Time") + 
+  theme_classic()
 ```
 
 At low carrying capacities, the self-limiting aspect of the prey population leads to a stable equilibrium between predators and prey. However, as carrying capacity increases, a certain stability threshold is passed. Prey population is able to grow to such a point that predators can eat enough prey, driving the prey population down, which in turn drives the predator population down, leading to oscillation.
