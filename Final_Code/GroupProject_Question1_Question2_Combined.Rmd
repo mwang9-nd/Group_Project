@@ -7,15 +7,23 @@ output:
   html_document: default
 ---
 
-#Group Project Question 1 - Lotka-Volterra Model
+# Modeling Group Project Part 1 - Lotka-Volterra Model
 
-### Equations
+## Model Description
+
+The Lotka-Volterra model is one of the simplest models that describes predator-prey dynamics. Its simplicity comes from assumptions that the only limiting factor for prey population growth is the predator and the only limiting factor for predator population is the availability of prey. It also assumes that these interactions between predator and prey are linear.
+
+
+
+### Model Equations
 
 Prey
 $\frac{dh}{dt} = bH - aPH$
 
 Predator
 $\frac{dP}{dt} = eaPH - sP$
+
+Where *H* is the prey (herbivore), the predator is *P*, and *b*, *a*, *e*, and *s* are prey birthrate, predator attack rate, conversion efficiency of prey to predators, and predator death rate, respectively.
 
 ### Initial Model
 
@@ -57,11 +65,11 @@ colnames(modelSim)[3] <- "predator"
 modelSim2 <- as.data.frame(modelSim)
 
 # plot simulation
-ggplot(data=modelSim2,aes(x=time)) + geom_line(aes(y=herbivore), colour="firebrick") + geom_line(aes(y=predator),colour="royalblue")+theme_classic()+ylab("Population Size")+ggtitle("Original Parameters")+theme(plot.title = element_text(hjust = 0.5))
+ggplot(data=modelSim2,aes(x=time)) + geom_line(aes(y=herbivore), color="firebrick") + geom_line(aes(y=predator),colour="royalblue")+theme_classic()+ylab("Population Size")+ggtitle("Original Parameters")+theme(plot.title = element_text(hjust = 0.5))
 
 ```
 
-For all graphs red is prey and blue is predator. This is true for all graphs to follow.
+For all graphs, red is prey and blue is predator. This is true for all graphs to follow.
 
 Initial summary of output below. How the parameters change will be determined by comparing results to above graph and summary below. 
 
@@ -123,13 +131,13 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 kable(summary(modelSim))
 ```
 
-The above two models changed the number of prey from 25 to 125 and 5, respectively. Interestingly, changing the prey number does not change much of the overall model. There are some slight changes in overall min/max of predator/prey, however the frequency does not seem to change at all. Interestingly, decreasing the inital number of prey increased the maximum number of prey and predators. The relative numbers between the predator and prey does not change much.
+The above two models changed the number of prey from 25 to 125 and from 25 to 5, increasing and decreasing the number of prey, respectively. Changing the prey number does not change much of the overall model. There are some slight changes in overall min/max of predator/prey, however the frequency does not seem to change at all. Interestingly, decreasing the inital number of prey increased the maximum number of prey and predators. The relative numbers between the predator and prey does not change much.
 
 
 
 ###Changing the number of predators
 
-Now let's do the same thing for the pedators as we did for the prey above. Change predator initial values from 5 to 1.
+Now let's do the same thing for the predators as we did for the prey above. Change predator initial values from 5 to 1.
 
 ```{r}
 # simulate dynamics by resetting parameters and intitial conditions
@@ -137,7 +145,7 @@ y = c(25,1)
 p = c(0.5,0.02,0.1,0.2)
 times=seq(from=1,to=100,by=0.1)
 
-# Simulate the model using ode
+# simulate the model using ode
 modelSim=ode(y=y,times=times,func=predPreySim,parms=p)
 colnames(modelSim)[2] <- "herbivore"
 colnames(modelSim)[3] <- "predator"
@@ -155,7 +163,7 @@ kable(summary(modelSim))
 ```
 
 
-Change predator from 5 to 25
+Change predator initial values from 5 to 25.
 
 ```{r}
 # simulate dynamics by resetting parameters and intitial conditions
@@ -186,6 +194,7 @@ Unlike changing the intial number of prey, changing the inital number of predato
 ###Changing the prey birthrate
 
 Change prey birthrate from 0.5 to 0.1 (and time to 200)
+
 ```{r}
 # simulate dynamics by resetting parameters and intitial conditions
 y = c(25,5)
@@ -210,6 +219,7 @@ kable(summary(modelSim))
 ```
 
 Change prey birthrate from 0.5 to 2.5
+
 ```{r}
 # simulate dynamics by resetting parameters and intitial conditions
 y = c(25,5)
@@ -232,12 +242,13 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 kable(summary(modelSim))
 ```
 
-Changing prey birthrate has significant effects on both max/min of predator prey and of the frequency of both also. Decreasing prey birthrate significantly decreased both frequency and max/min of both predator/prey, much more than changing the inital numbers of prey/predator. Additionally, the prey birthrate seems to havve a strong effect on the relative numbers between prey/predator, as shown by the differences in mean between the two. Additionally, increasing prey birthrate causes an interesting phenomenon where most of the times the prey are mostly dead but shoot up exponentially every now and then, whilst decreasing birthrate causes a more conservative change in the number of prey, more like a sinusoidal curve.
+Changing prey birthrate has significant effects on both max/min of predator prey and also of the frequency of both. Decreasing prey birthrate significantly decreased both frequency and max/min of both predator/prey, much more than changing the inital numbers of prey/predator. Additionally, the prey birthrate seems to havve a strong effect on the relative numbers between prey/predator, as shown by the differences in mean between the two. Additionally, increasing prey birthrate causes an interesting phenomenon where most of the time the prey are mostly dead but shoot up exponentially every now and then, whilst decreasing birthrate causes a more conservative change in the number of prey, more like a sinusoidal curve.
 
 
 ### Changing predator attack rate
 
 Change predator attack rate from 0.02 to 0.1
+
 ```{r}
 # simulate dynamics by resetting parameters and intitial conditions
 y = c(25,5)
@@ -287,7 +298,7 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 kable(summary(modelSim))
 ```
 
-Changing predator attack rate has significant effects on the overall model. Both the max/min and frequecy of predator/prey are significantly effected. Increasing the attack rate significantly decreases both the number of predators and prey and also increases the frequency of both predator/prey cycle, whilst decreasing the attack rate does the opposite. Additonally, decreasing the attack rate brings the prey to near extinction levels, as evidenced by the 0.08 minimum of prey, perhaps making it an unsustainable model. However, the relationship between the means does not change much from the original model (~1:4 ratio for predator:prey).
+Changing predator attack rate has significant effects on the overall model. Both the max/min and frequecy of predator/prey are significantly affected. Increasing the attack rate significantly decreases both the number of predators and prey and also increases the frequency of both predator/prey cycle, whilst decreasing the attack rate does the opposite. Additonally, decreasing the attack rate brings the prey to near extinction levels, as evidenced by the 0.08 minimum of prey, perhaps making it an unsustainable model. However, the relationship between the means does not change much from the original model (~1:4 ratio for predator:prey).
 
 
 ### Changing conversion efficiency
@@ -342,7 +353,7 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 kable(summary(modelSim))
 ```
 
-Changing conversion efficiency also changes min/max, frequency, and predator/prey relationships. However, the most interesting aspect of changing the conversion efficency is the change in relative means between the prey/predator relationship. Increasing conversion efficiency brings the relative number of prey much closer to the relative mean of the predator, as would be expected because the predator can more efficiently convert the prey into momre predators.
+Changing conversion efficiency also changes min/max, frequency, and predator/prey relationships. However, the most interesting aspect of changing the conversion efficency is the change in relative means between the prey/predator relationship. Increasing conversion efficiency brings the relative number of prey much closer to the relative mean of the predator, as would be expected because the predator can more efficiently convert the prey into more predators.
 
 
 ### Changing predator death rate
@@ -396,27 +407,26 @@ ggplot(data=modelSim2) + geom_line(aes(x=time,y=herbivore),color="firebrick")+ge
 kable(summary(modelSim))
 ```
 
-Predator death rate also has significant effects on the max/min and frequency in predator/prey. Additionally, the relative means between the predator/prey relationships is also effected. Increasing predator death rate increases prey counts (both max and mean) but also increases the max predator count. Decreasing predator death rate has the opposite effect while both increase the frequency.
+Predator death rate also has significant effects on the max/min and frequency in predator/prey. Additionally, the relative means between the predator/prey relationships is also affected. Increasing predator death rate increases prey counts (both max and mean) but also increases the max predator count. Decreasing predator death rate has the opposite effect while both increase the frequency.
 
 
 ### Conclusion
 
-Overall, all of the state variable and parameters have some effect on the model, whether they change the max/min of the prey/predator, change the overall frequency, change the rate of increase/decrease, or change the relative means of the two populations. What is interesting to note is the models in which the predator/prey minimun numbers reach <1. Realistically, it seems impossible to have half a predator or half a prey, suggesting these models are unsustainable. This suggests, that especially when changing the parameters, one must be careful that the parameters are not changed significantly since the model may become unrealistic, unless that is the purpose.
+Overall, all of the state variables and parameters have some effect on the model, whether they change the max/min of the prey/predator, change the overall frequency, change the rate of increase/decrease, or change the relative means of the two populations. What is interesting to note are the models in which the predator/prey minimun numbers reach <1. Realistically, it seems impossible to have half a predator or half a prey, suggesting these models are unsustainable. This suggests, that especially when changing the parameters, one must be careful that the parameters are not changed significantly since the model may become unrealistic, unless that is the purpose.
 
-### Questions
+## Questions
 
-##### What can you say about the "role" of each parameter?
-##### What is the relationship between parameter values and predator-prey cycle length?
+##### What can you say about the "role" of each parameter? What is the relationship between parameter values and predator-prey cycle length?
 
-Each parameter affects the model in different ways, with some parameters having larger effects than others depending on which parameters you are interested in. Dramatically changing some of the parameters makes the model almost unsustainable, as evidenced by the minimum numbers of prey/predator in each summary statement that are less than 1. Otherwise, however, the role of each parameter is fairly straight forward. For starters, what needs to be understood is that predator/prey relationships are intertwined, as evidenced by their rate equations being dependent on the population size of the other. 
+Each parameter affects the model in different ways, with some parameters having larger effects than others depending on which parameters you are interested in. Dramatically changing some of the parameters makes the model almost unsustainable, as evidenced by the minimum numbers of prey/predator in each summary statement that are less than 1. Otherwise, the role of each parameter is fairly straightforward. For starters, what needs to be understood is that predator/prey relationships are intertwined, as evidenced by their rate equations being dependent on the population size of the other. 
 
-The prey birth rate has a significant effect on the number of prey in the model, which inherently makes sense. Since the prey birthrate is the only factor that increases the number of prey (assuming the second factor will always be negative or zero), increaseing/decreasing this number understandably increase/decreases the number of prey. However, increasing the prey birth rate by a factor of five does not increase the number of prey by a factor of five, because the change in the number of prey (dp/dt), is limited by the number of prey also. Since the number of predators is reliant on the number of prey avialable, understandably increaseing the prey birth rate also increases the predator count. However, increasing the prey birthrate causes an exponential increase and sudden crash in population numbers caused by the exponential increase in predator numbers, suggesting that increasing the prey birthrate may be unsustainable. Decreasing the prey birthrate has the opposite effect, however, the model seems more sustainable. Additionally, we do not see the exponential increase and crash of the prey but instead see a more steady increase decrease in prey numbers and a similar trend with the predator numbers. Prey birth rate seems to significantly affect the frequency of the prey/predator model, where decreasing prey birth rate decreases the frequency whilst increasing prey birth rate increases the frequency.
+The prey birthrate has a significant effect on the number of prey in the model, which inherently makes sense. Since the prey birthrate is the only factor that increases the number of prey (assuming the second factor will always be negative or zero), increasing/decreasing this number understandably increase/decreases the number of prey. However, increasing the prey birthrate by a factor of five does not increase the number of prey by a factor of five, because the change in the number of prey (dp/dt), is limited by the number of prey also. Since the number of predators is reliant on the number of prey available, increasing the prey birth rate also increases the predator count. However, increasing the prey birthrate causes an exponential increase and sudden crash in population numbers caused by the exponential increase in predator numbers, suggesting that increasing the prey birthrate may be unsustainable. Decreasing the prey birthrate has the opposite effect, however, the model seems more sustainable. Additionally, we do not see the exponential increase and crash of the prey but instead see a more steady increase and decrease in prey numbers and a similar trend with the predator numbers. Prey birthrate seems to significantly affect the frequency of the prey/predator model, where decreasing prey birthrate decreases the frequency while increasing prey birth rate increases the frequency.
 
-Changing the predator attack rate has significant effect on both prey and predator numbers in the model, as expected. Increasing attack rate significantly signicificantly decreases the number of prey, and as a result the maximum number of predators decreases. However, the mean predator count is very close to the original model, most likely due to the dependance of the predator numbers on the prey numbers. Increased predator attact rate increases the frequency of prey/predator turnaround and also creates a steady, sinusodial model. Decreasing attack rate has the opposite effect with exponentiol increase/decrease of predator/prey population size whilst also lowering the frequency.
+Changing the predator attack rate has a significant effect on both prey and predator numbers in the model, as expected. Increasing attack rate significantly decreases the number of prey, and as a result, the maximum number of predators decreases. However, the mean predator count is very close to the original model, most likely due to the dependence of the predator numbers on the prey numbers. Increased predator attact rate increases the frequency of prey/predator turnaround and also creates a steady, sinusoidal model. Decreasing attack rate has the opposite effect with exponential increase/decrease of predator/prey population size while also lowering the frequency.
 
-The conversion efficiency is interesting, as it is one of the few parameters that significantly affects the ratios between predator and prey population sizes. Increasing conversion efficiency significantly increases the number of predators relative to the number of prey whilst limiting the population size of the prey, and vice versa. The conversion efficiency does not seem to have a significant effect on the frequency of the predator/prey cycle.
+The conversion efficiency is interesting, since it is one of the few parameters that significantly affects the ratios between predator and prey population sizes. Increasing conversion efficiency significantly increases the number of predators relative to the number of prey while still limiting the population size of the prey, and vice versa. The conversion efficiency does not seem to have a significant effect on the frequency of the predator/prey cycle.
 
-Finally, the predator death rate also has effects as expected. Increasing predator death rate causes a surge in prey numbers until such a point that we see a significant enough population of predators to bring the prey population down. Increasing predator death rate also increases the predator/prey cycle frequency. Decreasing the predator death rate has the opposite effect, where we observe a sudden spike in prey numbers when the predator numbers decrease. Due to the predator lingering (because of their lower death rate), prey essentially go extinct until there are low enough numbers of predators that the prey can recover. The lingering of the predators causes a decrease in frequency of the predator/prey cycle, as expected.
+Finally, the predator death rate also has effects as expected. Increasing predator death rate causes a surge in prey numbers until  a point where we see a significant enough population of predators to bring the prey population down. Increasing predator death rate also increases the predator/prey cycle frequency. Decreasing the predator death rate has the opposite effect, where we observe a sudden spike in prey numbers when the predator numbers decrease. Due to the predator lingering (because of their lower death rate), prey essentially go extinct until there are low enough numbers of predators that the prey can recover. The lingering of the predators causes a decrease in frequency of the predator/prey cycle, as expected.
 
 
 ##### What can you say about the role of predators in the simulations? 
@@ -424,7 +434,7 @@ Finally, the predator death rate also has effects as expected. Increasing predat
 The role of predators in the simulations is to keep in check the population of prey when the number of prey get too high. Without a limiting constraint on the prey, such as the predator, the prey would hypothetically expand exponentially unless there were to be a limiting resource or outside competition. This fact can be observed from the fact that in any of the given models above, the predator numbers only rise when the prey number rises, which inherently makes sense if we observe the equations. Because in the Lotka-Volterra model the only factor that allows predator numbers to increase is $e*a*P*H$ (assuming $s*P$ is always negative), the number of prey in the model (H) is the limiting factor in the model. And only when the number of predators rises the prey numbers start to decrease, and thus are kept in check. Once the number of prey die down, $e*a*P*H$ goes down and $s*P$ takes over, causing the overall number of predators to decrease.
 
 
-#Group Project Question 2 - Rosenzweig-MacArthur Model
+#Group Project Part 2 - Rosenzweig-MacArthur Model
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -496,7 +506,7 @@ ddRM <- function (t,y,p){
 
 ## Model Solution 
 
-Now, we will solve the following initial parameters:
+Now, we will simulate the model with the following initial parameters:
 
 $b = 0.8$
 
@@ -567,7 +577,7 @@ Let's now change individual parameters in order to show the role that each one h
   
   As predator population decreases, prey population is able to increase. The cycle repeats
   
-  Long-term behaivor is oscillation
+  Long-term behavior is oscillation
 
 
 ```{r echo=FALSE}
@@ -862,8 +872,7 @@ ggplot(modelOutput) +
 
 #### How do the dynamics differ from Lotka-Volterra?
   
-Dynamics in R-M models allow for a stable equilibrium population. The L-V population conistantly oscillates between Prey 
-depletion and Predator starvation to Prey. In the absence of predators, Prey in the L-V model grow exponentially, while Prey in the R-M model grow logistically.   
+Dynamics in R-M models allow for a stable equilibrium population. The L-V population consistantly oscillates between Prey depletion and Predator starvation to Prey. In the absence of predators, Prey in the L-V model grow exponentially, while Prey in the R-M model grow logistically.   
 
 #### What can you say about the role of each parameter, especially what causes the dyamics to differ between the L-V and R-M models?
   
